@@ -1,0 +1,101 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import vm from 'node:vm';
+import test from 'node:test';
+
+const root = new URL('../', import.meta.url);
+
+test('PWA serves current pages, isolates private requests and provides a public offline fallback', async () => {
+const origin = 'https://sportsofficer-sys.github.io';
+const base = `${origin}/sekhonmarathon_suratgarh_2026/`;
+const events = {};
+const buckets = new Map();
+const network = [];
+let offline = false;
+let checks = 0;
+const key = (request) => typeof request === 'string' ? request : request.url;
+const caches = {
+  async open(name) {
+    if (!buckets.has(name)) buckets.set(name, new Map());
+    const bucket = buckets.get(name);
+    return {
+      async addAll(requests) {
+        for (const request of requests) {
+          assert.equal(request.credentials, 'omit');
+          bucket.set(key(request), new Response(request.url.endsWith('offline.html') ? 'CONNECTION NEEDED' : 'ICON'));
+        }
+      },
+      async match(request) { return bucket.get(key(request))?.clone(); },
+    };
+  },
+  async keys() { return [...buckets.keys()]; },
+  async delete(name) { return buckets.delete(name); },
+};
+const sandbox = {
+  URL, Request, Response, Set, Promise, caches,
+  self: { location: { href: `${base}service-worker.js` }, addEventListener: (name, cb) => { events[name] = cb; } },
+  fetch: async (request, options) => {
+    network.push({ url: key(request), options });
+    if (offline) throw new TypeError('Offline');
+    return new Response('FRESH NETWORK');
+  },
+};
+vm.runInNewContext(await readFile(new URL('public/service-worker.js', root), 'utf8'), sandbox);
+let pending;
+events.install({ waitUntil: (promise) => { pending = promise; } });
+await pending;
+const stored = [...buckets.get('desert-braves-public-v1').keys()];
+assert.equal(stored.length, 4); checks++;
+assert(stored.every((url) => url === `${base}offline.html` || /\/assets\/(app-icon-(192|512)|apple-touch-icon-180)\.png$/.test(url))); checks++;
+assert(!stored.includes(base)); checks++;
+
+async function request(url, fields = {}) {
+  let response;
+  events.fetch({
+    request: { url, method: 'GET', mode: 'cors', headers: new Headers(), ...fields },
+    respondWith: (value) => { response = value; },
+  });
+  return response === undefined ? undefined : await response;
+}
+const fresh = await request(base, { mode: 'navigate' });
+assert.equal(await fresh.text(), 'FRESH NETWORK'); checks++;
+assert.equal(network.at(-1).options.cache, 'no-store'); checks++;
+assert.equal(buckets.get('desert-braves-public-v1').size, 4); checks++;
+
+for (const [url, fields] of [
+  ['https://project.supabase.co/rest/v1/registrations', {}],
+  ['https://project.supabase.co/storage/v1/object/sign/receipts/private.png?token=secret', {}],
+  [`${base}api/registrations`, {}],
+  [`${base}assets/receipt.png`, {}],
+  [`${base}certificates/participant.pdf`, {}],
+  [`${base}assets/app-icon-192.png?token=secret`, {}],
+  [base, { method: 'POST', mode: 'navigate' }],
+  [base, { mode: 'navigate', headers: new Headers({ Authorization: 'Bearer test' }) }],
+  [`${base}assets/app-icon-192.png`, { headers: new Headers({ Range: 'bytes=0-10' }) }],
+  [`${origin}/other-project/`, { mode: 'navigate' }],
+]) {
+  assert.equal(await request(url, fields), undefined, `Should bypass ${url}`); checks++;
+}
+
+offline = true;
+assert.equal(await (await request(base, { mode: 'navigate' })).text(), 'CONNECTION NEEDED'); checks++;
+assert.equal(await (await request(`${base}assets/app-icon-192.png`)).text(), 'ICON'); checks++;
+buckets.set('desert-braves-public-v0', new Map());
+buckets.set('unrelated-project-cache', new Map());
+events.activate({ waitUntil: (promise) => { pending = promise; } });
+await pending;
+assert(!buckets.has('desert-braves-public-v0')); checks++;
+assert(buckets.has('desert-braves-public-v1')); checks++;
+assert(buckets.has('unrelated-project-cache')); checks++;
+buckets.get('desert-braves-public-v1').delete(`${base}offline.html`);
+const unavailable = await request(base, { mode: 'navigate' });
+assert.equal(unavailable.status, 503); checks++;
+assert.equal(unavailable.headers.get('Cache-Control'), 'no-store'); checks++;
+const manifest = JSON.parse(await readFile(new URL('public/manifest.webmanifest', root), 'utf8'));
+for (const field of ['id', 'scope', 'start_url']) {
+  assert.equal(manifest[field], '/sekhonmarathon_suratgarh_2026/'); checks++;
+}
+assert.equal(manifest.display, 'standalone'); checks++;
+assert.deepEqual(manifest.icons.map((icon) => icon.sizes), ['192x192', '512x512']); checks++;
+assert.equal(checks, 28, 'Keep all cache/privacy/manifest regression assertions');
+});

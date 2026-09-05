@@ -1,8 +1,8 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import {
-  ArrowUpRight,
   ArrowRight,
+  ArrowUpRight,
   CalendarDays,
   Clock3,
   MapPin,
@@ -10,143 +10,120 @@ import {
   Medal,
   Shirt,
   Award,
-  Camera,
-  Gift,
   CupSoda,
   Menu,
   X,
-  Flag,
-  Route,
-  Timer,
-  Check,
-  Sun,
   Heart,
   UserRound,
   Phone,
-  MailCheck,
-  ClipboardCheck,
+  Moon,
+  Smile,
+  Check,
+  Download,
+  Flag,
+  Waves,
 } from 'lucide-react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Registration } from '@/components/registration';
 import { PolicyDialog } from '@/components/policies';
+import { PortalRecovery } from '@/components/portal-recovery';
 import { useEventAvailability } from '@/lib/event-availability';
+import { RACES } from '@/lib/race-data';
+const EventPortal = lazy(() =>
+  import('@/components/event-portal').then((module) => ({
+    default: module.EventPortal,
+  })),
+);
 const base = process.env.NEXT_PUBLIC_BASE_PATH || '';
-export const races = [
-  {
-    distance: '5',
-    name: 'Fun Run',
-    fee: 399,
-    level: 'EVERY STEP COUNTS',
-    description:
-      'Perfect for beginners, students and fitness enthusiasts who want to be part of the tribute run.',
-    features: [
-      'Beginner friendly',
-      'Run together as a family',
-      'Finisher medal & certificate',
-    ],
-    timed: false,
-  },
-  {
-    distance: '10',
-    name: 'Challenge Run',
-    fee: 899,
-    level: 'FIND YOUR NEXT GEAR',
-    description:
-      'Best for regular runners who want to test their endurance and step up to the next level.',
-    features: [
-      'For regular runners',
-      'Timed BIB included',
-      'Finisher medal & certificate',
-    ],
-    timed: true,
-  },
-  {
-    distance: '21',
-    name: 'Half Marathon',
-    fee: 899,
-    level: 'GO THE DISTANCE',
-    description:
-      'Designed for passionate runners who are ready to take on the ultimate tribute challenge.',
-    features: [
-      'For dedicated runners',
-      'Timed BIB included',
-      'Finisher medal & certificate',
-    ],
-    timed: true,
-  },
+const sourcePIB =
+  'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2185553&lang=2&reg=48';
+const sourceSekhon = 'https://gallantryawards.gov.in/awardee/3432';
+type PortalView = 'participant' | 'organiser' | 'verify';
+const questions = [
+  [
+    'Who can take part?',
+    'This Suratgarh edition is exclusively for airwarriors and their families. Registration will require a verified email address and the invitation code shared through station channels.',
+  ],
+  [
+    'What does the planned fee include?',
+    'The planned package includes an event T-shirt, medal, digital certificate, post-run food, banana and water/lemon water. Final menu and collection instructions will be confirmed. Caps are not included. Planned fees are ₹600 for 5 KM, ₹700 for 10 KM and ₹800 for 21 KM; final fees will be confirmed before payment opens.',
+  ],
+  [
+    'How will payment be confirmed?',
+    'When payments open, use the Suratgarh UPI details shown with your entry and upload the screenshot with its transaction reference. The organising team checks the payment against the account record. A screenshot upload means verification is pending; it does not itself confirm payment.',
+  ],
+  [
+    'How will the runs be timed?',
+    'The event uses an organiser-managed race clock and finish-line recording, without RFID chips or timing mats. Officials will record and verify competitive finishes. Participant-entered times are identified as self-reported and cannot decide podium or cash-prize results.',
+  ],
+  [
+    'How do results and certificates work?',
+    'My race desk brings together your entry, result and certificate. After the event, you can submit a finish time against your confirmed registration. Certificates depend on the event’s completion rules and approved certificate template. Any self-reported time is labelled; organiser holds or corrections must be resolved before issue.',
+  ],
+  [
+    'Can I register a child?',
+    'A parent or guardian must complete a child’s registration and provide consent. Category-specific age rules are being finalised; contact the organisers before planning a minor’s entry. Choose a distance appropriate to current fitness and training.',
+  ],
+  [
+    'Which T-shirt size should I choose?',
+    'The supplier’s measurement chart will be added once confirmed. For help with sizing, call the organising team before submitting. We will not substitute a generic size chart for the actual event T-shirt.',
+  ],
+  [
+    'Where is the route and when should I report?',
+    'Suratgarh route maps, the assembly point and category reporting instructions will be shared after station approval. The event is on 4 October 2026, with the published event window of 05:00–10:00 IST. Do not treat the artwork as a route map.',
+  ],
 ];
-const benefits = [
-  [Shirt, 'Official race tee'],
-  [Medal, 'Finisher medal'],
-  [Award, 'Certificate'],
-  [Sun, 'Runner cap'],
-  [CupSoda, 'Refreshments'],
-  [Heart, 'Energy drink'],
-  [Camera, 'Race photographs'],
-  [Gift, 'Goodie bag'],
-] as const;
-function Countdown() {
-  const [left, setLeft] = useState<number | null>(null);
-  useEffect(() => {
-    const update = () =>
-      setLeft(
-        Math.max(
-          0,
-          new Date('2026-10-04T05:00:00+05:30').getTime() - Date.now(),
-        ),
-      );
-    update();
-    const t = setInterval(update, 60000);
-    return () => clearInterval(t);
-  }, []);
-  return (
-    <div className="countdown">
-      <span className="countdown-label">THE START LINE AWAITS</span>
-      <div>
-        {['DAYS', 'HRS', 'MIN'].map((unit, i) => (
-          <div className="time-unit" key={unit}>
-            <strong>
-              {left === null
-                ? '—'
-                : String(
-                    Math.floor(left / [86400000, 3600000, 60000, 1000][i]) %
-                      [10000, 24, 60, 60][i],
-                  ).padStart(2, '0')}
-            </strong>
-            <span>{unit}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 export default function Home() {
   const [menu, setMenu] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [policy, setPolicy] = useState<string | null>(null);
+  const [portal, setPortal] = useState<PortalView | null>(null);
+  const [route, setRoute] = useState('5');
   const [showSticky, setShowSticky] = useState(false);
   const hero = useRef<HTMLElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
+  const navigation = useRef<HTMLElement>(null);
   const { availability } = useEventAvailability();
+  const canRegister = availability === 'open';
   const status = {
-    loading: 'Checking registration status',
+    loading: 'Checking registration',
     upcoming: 'Registration opens soon',
-    open: 'Registration is open',
-    closed: 'Registration has closed',
+    open: 'Registration open',
+    closed: 'Registration closed',
     unavailable: 'Registration temporarily unavailable',
   }[availability];
-  const canRegister = availability === 'open';
-  const action = canRegister ? 'Choose your race' : 'Explore the races';
   useEffect(() => {
-    if (!hero.current) return;
+    const syncView = () => {
+      const hash = window.location.hash;
+      const next =
+        new URLSearchParams(window.location.search).has('certificate') ||
+        hash === '#verify-certificate'
+          ? 'verify'
+          : hash === '#organiser'
+            ? 'organiser'
+            : hash === '#race-desk'
+              ? 'participant'
+              : null;
+      setPortal(next);
+    };
+    syncView();
+    window.addEventListener('popstate', syncView);
+    window.addEventListener('hashchange', syncView);
+    return () => {
+      window.removeEventListener('popstate', syncView);
+      window.removeEventListener('hashchange', syncView);
+    };
+  }, []);
+  useEffect(() => {
+    if (!hero.current || portal) return;
     const observer = new IntersectionObserver(([entry]) =>
       setShowSticky(!entry.isIntersecting),
     );
     observer.observe(hero.current);
     return () => observer.disconnect();
-  }, []);
+  }, [portal]);
   useEffect(() => {
     if (!menu) return;
+    navigation.current?.querySelector<HTMLAnchorElement>('a')?.focus();
     const close = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setMenu(false);
@@ -156,608 +133,688 @@ export default function Home() {
     document.addEventListener('keydown', close);
     return () => document.removeEventListener('keydown', close);
   }, [menu]);
+  const openPortal = (view: PortalView = 'participant') => {
+    const url = new URL(window.location.href);
+    if (view !== 'verify') url.searchParams.delete('certificate');
+    url.hash =
+      view === 'participant'
+        ? 'race-desk'
+        : view === 'organiser'
+          ? 'organiser'
+          : 'verify-certificate';
+    window.history.pushState(null, '', url);
+    setMenu(false);
+    setPortal(view);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+  const closePortal = () => {
+    setPortal(null);
+    const url = new URL(window.location.href);
+    url.searchParams.delete('certificate');
+    url.hash = '';
+    window.history.replaceState(null, '', url);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+  if (portal)
+    return (
+      <PortalRecovery onClose={closePortal}>
+        <Suspense
+          fallback={
+            <main className="portal-loading" role="status">
+              Opening your race desk…
+            </main>
+          }
+        >
+          <EventPortal
+            initialView={portal}
+            onViewChange={openPortal}
+            onClose={closePortal}
+          />
+        </Suspense>
+      </PortalRecovery>
+    );
   return (
     <>
-      <a className="skip-link" href="#main">
-        Skip to content
-      </a>
-      <div className="topbar">
-        <span>
-          <ShieldCheck size={14} /> For airwarriors &amp; families
-        </span>
-        <span>INDIAN AIR FORCE TRIBUTE RUN · 2026</span>
-      </div>
-      <header className="site-header">
-        <a
-          className="brand"
-          href="#main"
-          aria-label="Sekhon Marathon Suratgarh home"
-        >
-          <img
-            src={`${base}/assets/sekhon-logo.webp`}
-            width="718"
-            height="347"
-            alt="Sekhon Marathon"
-          />
-          <span>
-            <b>DESERT BRAVES</b>
-            <small>Air Force Station Suratgarh</small>
-          </span>
+      <div className="station-site">
+        <a className="skip-link" href="#main">
+          Skip to content
         </a>
-        <nav
-          id="main-navigation"
-          className={menu ? 'navigation open' : 'navigation'}
-          aria-label="Main navigation"
-        >
-          {[
-            ['The event', '#event'],
-            ['Race categories', '#races'],
-            ['Race day', '#race-day'],
-            ['FAQs', '#faqs'],
-            ['Contact', '#contact'],
-          ].map(([label, href]) => (
-            <a key={href} href={href} onClick={() => setMenu(false)}>
-              {label}
-            </a>
-          ))}
-        </nav>
-        <div className="header-actions">
-          <button
-            className="entry-button"
-            aria-label="My entry and payment status"
-            onClick={() => {
-              setMenu(false);
-              setSelected('status');
-            }}
-          >
-            <UserRound size={19} />
-            <span>My entry</span>
-          </button>
-          <a className="button nav-cta" href="#races">
-            View races <ArrowUpRight size={17} />
-          </a>
-          <button
-            ref={menuButton}
-            className="menu-button"
-            aria-label={menu ? 'Close navigation' : 'Open navigation'}
-            aria-controls="main-navigation"
-            aria-expanded={menu}
-            onClick={() => setMenu(!menu)}
-          >
-            {menu ? <X /> : <Menu />}
-          </button>
+        <div className="s-topline">
+          <span>INDIAN AIR FORCE · SEKHON MARATHON 2026</span>
+          <span>
+            <ShieldCheck size={13} /> Airwarriors & families
+          </span>
         </div>
-      </header>
-      <main id="main">
-        <section ref={hero} className="hero" aria-labelledby="hero-title">
-          <picture className="hero-picture">
-            <source
-              media="(max-width:760px)"
-              srcSet={`${base}/assets/desert-braves-mobile.webp`}
-            />
+        <header className="s-header">
+          <a
+            className="s-wordmark"
+            href="#main"
+            aria-label="Air Force Station Suratgarh — home"
+          >
             <img
-              className="hero-image"
-              src={`${base}/assets/desert-braves.webp`}
-              width="1860"
-              height="845"
-              alt=""
-              fetchPriority="high"
+              src={`${base}/assets/sekhon-logo.webp`}
+              width="64"
+              height="44"
+              alt="Sekhon Marathon"
             />
-          </picture>
-          <div className="hero-shade" />
-          <div className="hero-content">
-            <div className="eyebrow light">
-              <span /> DESERT BRAVES · 2026 EDITION
-            </div>
-            <h1 id="hero-title">
-              SEKHON
-              <br />
-              <em>MARATHON.</em>
-            </h1>
-            <p className="hero-subtitle">The Land of Sun and Sand.</p>
-            <p className="hero-description">
-              A tribute to Flying Officer
-              <br className="desktop-break" /> Nirmal Jit Singh Sekhon PVC.
-            </p>
-            <div className="hero-facts">
-              <span>
-                <CalendarDays size={18} />
-                <b>4 October 2026</b>
-              </span>
-              <span>
-                <MapPin size={18} />
-                Suratgarh, Rajasthan
-              </span>
-            </div>
-            <div
-              className={`availability-status status-${availability}`}
-              role="status"
+            <span>
+              <small>AIR FORCE STATION</small>
+              <b>SURATGARH</b>
+            </span>
+          </a>
+          <nav
+            ref={navigation}
+            className={`s-nav ${menu ? 'is-open' : ''}`}
+            aria-label="Main navigation"
+            id="station-navigation"
+          >
+            {[
+              ['The races', '#races'],
+              ['The legacy', '#legacy'],
+              ['Race day', '#race-day'],
+              ['FAQs', '#faqs'],
+            ].map(([label, href]) => (
+              <a key={href} href={href} onClick={() => setMenu(false)}>
+                {label}
+              </a>
+            ))}
+            <button onClick={() => openPortal()} className="s-nav-mobile-entry">
+              My race desk <ArrowUpRight size={16} />
+            </button>
+          </nav>
+          <div className="s-header-actions">
+            <button
+              className="s-entry-link"
+              aria-label="My race desk"
+              onClick={() => openPortal()}
             >
-              <span />
-              {status}
-            </div>
-            <div className="hero-actions">
-              <a className="button orange" href="#races">
-                {action}
-                <ArrowRight size={20} />
-              </a>
-              <span className="hero-distances">
-                5 KM <i /> 10 KM <i /> 21 KM
-              </span>
-            </div>
-            <p className="hero-restriction">
-              <ShieldCheck size={16} /> Exclusively for airwarriors &amp; their
-              families
-            </p>
-          </div>
-          <div className="hero-location">
-            <span>RUN. SOAR. INSPIRE.</span>
-            <b>AIR FORCE STATION SURATGARH</b>
-          </div>
-        </section>
-        <section className="event-strip" aria-label="Event essentials">
-          <div>
-            <CalendarDays />
-            <span>
-              <small>RACE DAY</small>
-              <strong>04 October 2026</strong>
-              <p>Sunday</p>
-            </span>
-          </div>
-          <div>
-            <Clock3 />
-            <span>
-              <small>EVENT TIME</small>
-              <strong>05:00 — 10:00 AM</strong>
-              <p>Indian Standard Time</p>
-            </span>
-          </div>
-          <div>
-            <MapPin />
-            <span>
-              <small>THE VENUE</small>
-              <strong>Air Force Station</strong>
-              <p>Suratgarh, Rajasthan</p>
-            </span>
-          </div>
-          <div>
-            <Flag />
-            <span>
-              <small>REGISTRATION CLOSES</small>
-              <strong>27 September 2026</strong>
-              <p>Choose your distance below</p>
-            </span>
-          </div>
-        </section>
-        <section id="races" className="section race-section">
-          <div className="section-heading">
-            <div>
-              <div className="eyebrow">01 / FIND YOUR DISTANCE</div>
-              <h2>
-                Your race.
-                <br className="mobile-break" /> Your moment.
-              </h2>
-            </div>
-            <p>
-              Three distances. One spirit of honour.
-              <br />
-              Find the start line that’s right for you.
-            </p>
-          </div>
-          <div className="race-availability">
-            <ShieldCheck size={18} />
-            <span>
-              <b>{status}.</b>{' '}
-              {canRegister
-                ? 'Have your email and station invitation code ready.'
-                : availability === 'upcoming'
-                  ? 'Compare the distances and explore the registration preview.'
-                  : 'You can still explore race details and check an existing entry.'}
-            </span>
-          </div>
-          <div className="race-overview" aria-label="Race prices at a glance">
-            {races.map((race) => (
-              <a href={`#race-${race.distance}`} key={race.distance}>
-                <b>
-                  {race.distance}
-                  <span> KM</span>
-                </b>
-                <span>₹{race.fee}</span>
-                <small>{race.timed ? 'Timed run' : 'Fun run'}</small>
-              </a>
-            ))}
-          </div>
-          <div className="race-grid">
-            {races.map((race, i) => (
-              <article
-                id={`race-${race.distance}`}
-                className={`race-card race-${i}`}
-                key={race.distance}
-              >
-                <div className="race-top">
-                  <span>{race.level}</span>
-                  {race.timed && (
-                    <span className="timed-tag">
-                      <Timer size={13} /> TIMED RUN
-                    </span>
-                  )}
-                </div>
-                <div className="race-card-heading">
-                  <div className="race-distance">
-                    {race.distance}
-                    <span>KM</span>
-                  </div>
-                  <h3>{race.name}</h3>
-                </div>
-                <p>{race.description}</p>
-                <ul>
-                  {race.features.map((f) => (
-                    <li key={f}>
-                      <Check size={16} />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="race-bottom">
-                  <div>
-                    <strong>₹{race.fee}</strong>
-                    <span>per participant</span>
-                  </div>
-                  <button
-                    className="race-select"
-                    onClick={() => setSelected(race.distance)}
-                    aria-label={`${canRegister ? 'Choose' : availability === 'upcoming' ? 'Preview' : 'View'} ${race.distance} KM ${race.name}`}
-                  >
-                    {canRegister
-                      ? 'Choose'
-                      : availability === 'upcoming'
-                        ? 'Preview'
-                        : 'View'}{' '}
-                    {race.distance} KM <ArrowRight size={18} />
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-          <p className="race-footnote">
-            <Shirt size={16} /> Every registration includes your race tee,
-            medal, certificate and race-day benefits.
-          </p>
-        </section>
-        <section
-          className="registration-guide section"
-          aria-labelledby="registration-guide-title"
-        >
-          <div className="section-heading">
-            <div>
-              <div className="eyebrow">A SIMPLE START</div>
-              <h2 id="registration-guide-title">From sign-in to start line.</h2>
-            </div>
-            <button className="text-link" onClick={() => setSelected('status')}>
-              Already registered? My entry <ArrowUpRight size={18} />
+              <UserRound size={18} />
+              <span>My race desk</span>
+            </button>
+            <button
+              ref={menuButton}
+              className="s-menu"
+              aria-label={menu ? 'Close navigation' : 'Open navigation'}
+              aria-controls="station-navigation"
+              aria-expanded={menu}
+              onClick={() => setMenu(!menu)}
+            >
+              {menu ? <X /> : <Menu />}
             </button>
           </div>
-          <ol>
-            <li>
-              <MailCheck />
-              <div>
-                <b>01 · Get access</b>
-                <p>
-                  Sign in with your email and enter the station invitation code.
-                </p>
+        </header>
+        <main id="main">
+          <section className="s-hero" ref={hero} aria-labelledby="event-title">
+            <div className="s-hero-copy">
+              <div className="s-edition">
+                <span /> DESERT BRAVES · SURATGARH EDITION
               </div>
-            </li>
-            <li>
-              <UserRound />
-              <div>
-                <b>02 · Add your runner</b>
-                <p>
-                  Choose a distance and add participant details and T-shirt
-                  size.
-                </p>
+              <p className="s-host">Air Force Station Suratgarh</p>
+              <h1 id="event-title">
+                SEKHON IAF
+                <br />
+                <span>MARATHON</span>
+                <sup>2026</sup>
+              </h1>
+              <p className="s-tagline">The Land of Sun and Sand.</p>
+              <p className="s-intro">
+                A tribute to courage. A morning for our community.
+                <br className="s-desktop-break" /> Run together with the Desert
+                Braves.
+              </p>
+              <div className="s-date">
+                <CalendarDays size={19} />
+                <strong>Sunday, 4 October 2026</strong>
+                <span>05:00–10:00 IST</span>
               </div>
-            </li>
-            <li>
-              <ClipboardCheck />
-              <div>
-                <b>03 · Payment &amp; review</b>
-                <p>
-                  When payments open, upload your receipt. Your entry is
-                  confirmed after organiser verification.
-                </p>
+              <div className="s-hero-actions">
+                <a className="s-button" href="#races">
+                  {canRegister ? 'Choose your race' : 'Explore the races'}
+                  <ArrowRight size={19} />
+                </a>
+                <a className="s-quiet-link" href="#legacy">
+                  Why we run <ArrowUpRight size={16} />
+                </a>
               </div>
-            </li>
-          </ol>
-        </section>
-        <section id="event" className="tribute-section">
-          <figure className="legacy-photo">
+              <p className="s-availability" role="status">
+                <span />
+                {status}
+                <i>For airwarriors & families</i>
+              </p>
+            </div>
+            <figure className="s-hero-art">
+              <picture>
+                <source
+                  media="(max-width: 700px)"
+                  srcSet={`${base}/assets/suratgarh-canal-mobile.webp`}
+                />
+                <img
+                  src={`${base}/assets/suratgarh-canal-desktop.webp`}
+                  alt="Canvas impression of a green desert station, with a tree-lined canal, runners and Indian Air Force aircraft"
+                  width="1600"
+                  height="900"
+                  fetchPriority="high"
+                />
+              </picture>
+              <figcaption>
+                <Waves size={18} />
+                <span>
+                  <b>DESERT SPIRIT. A COMMUNITY IN STRIDE.</b>Canvas impression
+                  inspired by Suratgarh and the Indira canal; not a route map.
+                </span>
+              </figcaption>
+            </figure>
+          </section>
+          <section className="s-facts" aria-label="Event essentials">
+            <div>
+              <CalendarDays />
+              <span>
+                RACE DAY<strong>4 October 2026</strong>
+              </span>
+            </div>
+            <div>
+              <MapPin />
+              <span>
+                HOST STATION<strong>Air Force Station Suratgarh</strong>
+              </span>
+            </div>
+            <div>
+              <Flag />
+              <span>
+                THREE DISTANCES<strong>5 KM · 10 KM · 21 KM</strong>
+              </span>
+            </div>
+            <div>
+              <Clock3 />
+              <span>
+                REGISTRATION DEADLINE<strong>27 September 2026</strong>
+              </span>
+            </div>
+          </section>
+          <section
+            className="s-section s-races"
+            id="races"
+            aria-labelledby="races-title"
+          >
+            <div className="s-section-head">
+              <div>
+                <span className="s-kicker">01 / YOUR START LINE</span>
+                <h2 id="races-title">Choose your distance.</h2>
+              </div>
+              <p>
+                Choose the run that matches your preparation.
+                <br />
+                The same tribute. Your own pace.
+              </p>
+            </div>
+            <div className="s-price-note">
+              <ShieldCheck size={16} />
+              <span>
+                {canRegister ? 'Registration is open.' : status + '.'} Planned
+                fees below; final confirmation before payments open.
+              </span>
+            </div>
+            <div className="s-race-grid">
+              {RACES.map((race) => (
+                <article className="s-race" key={race.distance}>
+                  <div className="s-race-label">{race.label}</div>
+                  <div className="s-race-title">
+                    <strong>
+                      {race.distance}
+                      <small>KM</small>
+                    </strong>
+                    <h3>{race.name}</h3>
+                  </div>
+                  <p>{race.description}</p>
+                  <span className="s-race-detail">
+                    <Check size={15} />
+                    {race.detail}
+                  </span>
+                  <div className="s-race-bottom">
+                    <div>
+                      <b>₹{race.fee}</b>
+                      <small>planned fee</small>
+                    </div>
+                    <button
+                      className="s-button s-button-small"
+                      onClick={() => setSelected(race.distance)}
+                      aria-label={`${canRegister ? 'Register for' : 'Explore'} ${race.distance} KM ${race.name}`}
+                    >
+                      {canRegister ? 'Register' : 'Explore'} {race.distance} KM
+                      <ArrowRight size={16} />
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <p className="s-timing-note">
+              Organiser-managed timing. No RFID chips or timing mats. Category
+              age rules and route details will be confirmed before registration
+              opens.
+            </p>
+            <div className="s-kit">
+              <div>
+                <span className="s-kicker">PLANNED RUNNER PACKAGE</span>
+                <h3>Useful essentials. A memorable morning.</h3>
+              </div>
+              <ul>
+                {[
+                  [Shirt, 'Event T-shirt'],
+                  [Medal, 'Medal'],
+                  [Award, 'Digital certificate'],
+                  [CupSoda, 'Food & refreshments'],
+                ].map(([Icon, label]) => {
+                  const Item = Icon as typeof Shirt;
+                  return (
+                    <li key={String(label)}>
+                      <Item size={25} />
+                      <span>{String(label)}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+              <p>
+                Post-run food, banana and water / lemon water. Final menu and
+                collection details to follow. No cap included.
+              </p>
+            </div>
+          </section>
+          <section className="s-desk-strip" aria-labelledby="desk-title">
+            <div>
+              <span className="s-kicker">FROM REGISTRATION TO FINISH LINE</span>
+              <h2 id="desk-title">Your race, in one place.</h2>
+              <p>
+                Check your entry and payment status. Return after the run for
+                your result and certificate.
+              </p>
+            </div>
+            <button
+              className="s-button s-button-light"
+              onClick={() => openPortal()}
+            >
+              Open my race desk
+              <ArrowUpRight size={18} />
+            </button>
+          </section>
+          <section
+            className="s-section s-legacy"
+            id="legacy"
+            aria-labelledby="legacy-title"
+          >
+            <div className="s-legacy-aside">
+              <span className="s-kicker">02 / THE MAN BEHIND THE MARATHON</span>
+              <figure className="s-portrait">
+                <img
+                  src={`${base}/assets/nirmal-jit-singh-sekhon-portrait.webp`}
+                  width="200"
+                  height="150"
+                  loading="lazy"
+                  alt="Archival portrait of Flying Officer Nirmal Jit Singh Sekhon, Param Vir Chakra recipient"
+                />
+                <figcaption>
+                  Archive portrait ·{' '}
+                  <a href={sourceSekhon} target="_blank" rel="noreferrer">
+                    Ministry of Defence
+                  </a>
+                </figcaption>
+              </figure>
+              <div className="s-honour">
+                <b>PARAM VIR CHAKRA</b>
+                <span>Awarded posthumously</span>
+                <span>14 December 1971 · Srinagar</span>
+              </div>
+            </div>
+            <div className="s-legacy-copy">
+              <h2 id="legacy-title">
+                Flying Officer
+                <br />
+                Nirmal Jit Singh Sekhon<span>PVC</span>
+              </h2>
+              <p className="s-lead">Courage beyond the call of duty.</p>
+              <p>
+                Flying Officer Nirmal Jit Singh Sekhon served with No. 18
+                Squadron of the Indian Air Force. On 14 December 1971, six enemy
+                Sabre aircraft attacked Srinagar airfield. He took off in his
+                Gnat under fire and engaged the attackers, despite being heavily
+                outnumbered.
+              </p>
+              <p>
+                His aircraft was brought down during the combat, and he lost his
+                life. Awarded the Param Vir Chakra posthumously, he remains the
+                Indian Air Force’s only recipient of India’s highest wartime
+                gallantry award.
+              </p>
+              <blockquote>
+                “supreme gallantry, flying skill and determination above and
+                beyond the call of duty”
+                <cite>
+                  From his Param Vir Chakra citation —{' '}
+                  <a href={sourceSekhon} target="_blank" rel="noreferrer">
+                    read the official account <ArrowUpRight size={13} />
+                  </a>
+                </cite>
+              </blockquote>
+              <p className="s-legacy-end">
+                At Suratgarh, we run in remembrance of that courage,
+                determination and devotion to duty.
+              </p>
+            </div>
+          </section>
+          <section
+            className="s-section s-running"
+            aria-labelledby="running-title"
+          >
+            <figure className="s-running-photo">
+              <img
+                src={`${base}/assets/ap-singh-sekhon-2025.webp`}
+                width="1500"
+                height="1600"
+                loading="lazy"
+                alt="Air Chief Marshal AP Singh running alongside participants at the 2025 Sekhon Marathon in Delhi"
+              />
+              <figcaption>
+                <strong>Leading by example.</strong>Air Chief Marshal AP Singh
+                in the 21 KM run, Delhi, 2025.
+                <br />
+                Photo: Ministry of Defence /{' '}
+                <a href={sourcePIB} target="_blank" rel="noreferrer">
+                  PIB
+                </a>
+              </figcaption>
+            </figure>
+            <div className="s-running-copy">
+              <span className="s-kicker">03 / A HABIT WORTH STARTING</span>
+              <h2 id="running-title">
+                For the tribute.
+                <br />
+                For yourself.
+              </h2>
+              <p className="s-lead">
+                The finish line is one morning.
+                <br />
+                The habit can stay with you.
+              </p>
+              <p>
+                At the inaugural Sekhon Marathon in 2025, Air Chief Marshal AP
+                Singh joined the 21 KM run. This October, our station community
+                carries the spirit of participation forward.
+              </p>
+              <div className="s-health-list">
+                {[
+                  [
+                    Heart,
+                    'Support your heart',
+                    'Regular physical activity supports cardiovascular health.',
+                  ],
+                  [
+                    Smile,
+                    'Make space for your mind',
+                    'Being active can reduce feelings of anxiety and support mental wellbeing.',
+                  ],
+                  [
+                    Moon,
+                    'Rest better',
+                    'Regular activity can help improve sleep quality.',
+                  ],
+                ].map(([Icon, title, body]) => {
+                  const Item = Icon as typeof Heart;
+                  return (
+                    <div key={String(title)}>
+                      <Item size={23} />
+                      <span>
+                        <h3>{String(title)}</h3>
+                        <p>{String(body)}</p>
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="s-health-source">
+                Benefits relate to regular physical activity, not a guaranteed
+                outcome of one race. Sources:{' '}
+                <a
+                  href="https://www.who.int/news-room/fact-sheets/detail/physical-activity"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  WHO
+                </a>{' '}
+                ·{' '}
+                <a
+                  href="https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  CDC
+                </a>
+                .
+              </p>
+              <p className="s-training-note">
+                Start at your current level. Build gradually. Choose the
+                distance you have prepared for.
+              </p>
+            </div>
+          </section>
+          <section className="s-community">
             <img
               src={`${base}/assets/sekhon-2025-legacy.webp`}
               width="1600"
               height="962"
-              alt="Runners at the inaugural Sekhon Indian Air Force Marathon in Delhi in 2025"
               loading="lazy"
+              alt="Runners at the inaugural Sekhon Indian Air Force Marathon in Delhi, 2025"
             />
-            <figcaption>
-              <b>One legacy. Thousands of footsteps.</b>
-              <span>
-                Delhi, 2025 · Inaugural Sekhon IAF Marathon
+            <div>
+              <span className="s-kicker">DESERT BRAVES · OUR INVITATION</span>
+              <h2>
+                Every step honours courage.
                 <br />
-                Photo: Ministry of Defence /{' '}
-                <a
-                  href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2185553&amp;lang=2&amp;reg=48"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                Every finish brings us together.
+              </h2>
+              <a className="s-button" href="#races">
+                Find your distance
+                <ArrowRight size={18} />
+              </a>
+              <p>
+                Photo: inaugural Sekhon IAF Marathon, Delhi, 2025.
+                <br />
+                Ministry of Defence /{' '}
+                <a href={sourcePIB} target="_blank" rel="noreferrer">
                   PIB
                 </a>
-              </span>
-            </figcaption>
-          </figure>
-          <div className="tribute-copy">
-            <div className="eyebrow">02 / A LEGACY THAT MOVES US</div>
-            <h2>
-              A run inspired by
-              <br />
-              courage & honour.
-            </h2>
-            <p>
-              Sekhon Indian Air Force Marathon 2026 is a tribute run dedicated
-              to the courage, sacrifice and inspiring legacy of Flying Officer
-              Nirmal Jit Singh Sekhon PVC.
-            </p>
-            <p>
-              The marathon brings runners together to celebrate fitness,
-              endurance, patriotism and the spirit of honour through multiple
-              race categories at Air Force Station Suratgarh.
-            </p>
-            <div className="tribute-stat">
-              <div>
-                <strong>1971</strong>
-                <span>YEAR OF SACRIFICE</span>
-              </div>
-              <div>
-                <strong>One legacy.</strong>
-                <span>COUNTLESS STEPS FORWARD.</span>
-              </div>
-            </div>
-            <a className="text-link" href="#races">
-              Run with pride <ArrowUpRight size={20} />
-            </a>
-          </div>
-        </section>
-        <section className="section benefits-section">
-          <div className="section-heading">
-            <div>
-              <div className="eyebrow">INCLUDED WITH REGISTRATION</div>
-              <h2>A race day to remember.</h2>
-            </div>
-            <p>
-              Your race-day benefits,
-              <br />
-              from the first step to the finish.
-            </p>
-          </div>
-          <div className="benefits-grid">
-            {benefits.map(([Icon, label]) => (
-              <div key={label}>
-                <Icon size={28} strokeWidth={1.35} />
-                <span>{label}</span>
-              </div>
-            ))}
-          </div>
-          <div className="benefits-note">
-            <Timer size={18} /> Timed BIBs are included exclusively for 10 KM
-            and 21 KM participants.
-          </div>
-        </section>
-        <section id="race-day" className="race-day-section">
-          <div className="race-day-inner">
-            <div>
-              <div className="eyebrow light">03 / KNOW YOUR RACE DAY</div>
-              <h2>
-                Arrive ready.
-                <br />
-                Run with confidence.
-              </h2>
-              <p>
-                Sunday, 4 October 2026
-                <br />
-                05:00 AM – 10:00 AM IST
-                <br />
-                Air Force Station Suratgarh
               </p>
-              <Countdown />
             </div>
-            <div className="route-panel">
-              <div className="route-title">
-                <Route size={24} />
-                <h3>Your race route</h3>
-              </div>
-              <Tabs defaultValue="5">
-                <TabsList className="route-tabs">
-                  {races.map((r) => (
-                    <TabsTrigger value={r.distance} key={r.distance}>
-                      {r.distance} KM
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-                {races.map((r) => (
-                  <TabsContent value={r.distance} key={r.distance}>
-                    <div className="route-pending">
-                      <MapPin size={36} strokeWidth={1.3} />
-                      <span className="status-chip">ROUTE TO BE ANNOUNCED</span>
-                      <h4>{r.distance} KM · Suratgarh</h4>
-                      <p>
-                        The station route, assembly point and reporting
-                        instructions will be shared here once finalised.
-                      </p>
-                    </div>
-                  </TabsContent>
+          </section>
+          <section
+            className="s-section s-race-day"
+            id="race-day"
+            aria-labelledby="race-day-title"
+          >
+            <div>
+              <span className="s-kicker">04 / PLAN YOUR MORNING</span>
+              <h2 id="race-day-title">Race day at Suratgarh.</h2>
+              <dl>
+                <div>
+                  <dt>Date</dt>
+                  <dd>Sunday, 4 October 2026</dd>
+                </div>
+                <div>
+                  <dt>Event window</dt>
+                  <dd>05:00–10:00 AM IST</dd>
+                </div>
+                <div>
+                  <dt>Host</dt>
+                  <dd>Air Force Station Suratgarh</dd>
+                </div>
+                <div>
+                  <dt>Access</dt>
+                  <dd>Airwarriors & families only</dd>
+                </div>
+              </dl>
+              <p className="s-note">
+                Follow the station’s entry instructions and the directions of
+                event marshals. Category reporting times and the assembly point
+                will be confirmed here.
+              </p>
+            </div>
+            <div className="s-route-panel">
+              <h3>Your route</h3>
+              <div
+                className="s-route-tabs"
+                role="tablist"
+                aria-label="Race route"
+              >
+                {['5', '10', '21'].map((distance) => (
+                  <button
+                    key={distance}
+                    id={`route-tab-${distance}`}
+                    role="tab"
+                    aria-selected={route === distance}
+                    aria-controls="route-panel"
+                    tabIndex={route === distance ? 0 : -1}
+                    onClick={() => setRoute(distance)}
+                    onKeyDown={(event) => {
+                      const keys = ['5', '10', '21'];
+                      if (
+                        event.key === 'ArrowRight' ||
+                        event.key === 'ArrowLeft'
+                      ) {
+                        event.preventDefault();
+                        const next =
+                          keys[
+                            (keys.indexOf(route) +
+                              (event.key === 'ArrowRight' ? 1 : 2)) %
+                              3
+                          ];
+                        setRoute(next);
+                        document.getElementById(`route-tab-${next}`)?.focus();
+                      }
+                    }}
+                  >
+                    {distance} KM
+                  </button>
                 ))}
-              </Tabs>
-              <div className="route-note">
-                <ShieldCheck size={17} />
+              </div>
+              <div
+                className="s-route-content"
+                id="route-panel"
+                role="tabpanel"
+                tabIndex={0}
+                aria-labelledby={`route-tab-${route}`}
+              >
+                <MapPin size={34} />
+                <span>AWAITING STATION APPROVAL</span>
+                <h4>{route} KM · Suratgarh</h4>
                 <p>
-                  Entry is restricted to airwarriors and families. Follow
-                  station entry instructions and event marshals on race day.
+                  The approved course, start point and reporting instructions
+                  will appear here.
                 </p>
               </div>
+              <span className="s-route-footer">
+                Please use the published route once confirmed.
+              </span>
+            </div>
+          </section>
+          <section className="s-section s-faq" id="faqs">
+            <div>
+              <span className="s-kicker">BEFORE YOU REGISTER</span>
+              <h2>Good to know.</h2>
+              <p>
+                Clear answers for runners <br />
+                and families.
+              </p>
+            </div>
+            <div>
+              {questions.map(([title, text]) => (
+                <details key={title}>
+                  <summary>
+                    {title}
+                    <span>+</span>
+                  </summary>
+                  <p>{text}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+          <section className="s-contact" id="contact">
+            <div>
+              <span className="s-kicker">AIR FORCE STATION SURATGARH</span>
+              <h2>Talk to the organising team.</h2>
+              <p>
+                Invitation codes, registration, T-shirt sizing and race-day
+                enquiries.
+              </p>
+            </div>
+            <div className="s-phone-links">
+              <a href="tel:+918838463776">
+                <Phone size={19} />
+                88384 63776
+                <ArrowUpRight size={17} />
+              </a>
+              <a href="tel:+917027964880">
+                <Phone size={19} />
+                70279 64880
+                <ArrowUpRight size={17} />
+              </a>
+            </div>
+          </section>
+        </main>
+        <footer className="s-footer">
+          <div className="s-footer-top">
+            <div>
+              <b>AIR FORCE STATION SURATGARH</b>
+              <p>
+                Desert Braves · The Land of Sun and Sand.
+                <br />
+                Sekhon Indian Air Force Marathon · 4 October 2026
+              </p>
+            </div>
+            <details className="s-install">
+              <summary>
+                <Download size={17} />
+                Keep the race desk on your phone
+              </summary>
+              <p>
+                Android: open the browser menu and choose Install app or Add to
+                Home screen when available.
+                <br />
+                iPhone: open this site in Safari, tap Share, then Add to Home
+                Screen. Registration and results need an internet connection.
+              </p>
+            </details>
+          </div>
+          <div className="s-footer-bottom">
+            <span>© 2026 Desert Braves · Suratgarh</span>
+            <div>
+              <button onClick={() => setPolicy('terms')}>Terms</button>
+              <button onClick={() => setPolicy('privacy')}>Privacy</button>
+              <button onClick={() => setPolicy('refund')}>Refunds</button>
+              <button onClick={() => openPortal('verify')}>
+                Verify certificate
+              </button>
+              <button onClick={() => openPortal('organiser')}>
+                Organiser access
+              </button>
             </div>
           </div>
-        </section>
-        <section id="faqs" className="section faq-section">
-          <div>
-            <div className="eyebrow">BEFORE THE START LINE</div>
-            <h2>
-              A few things{' '}
-              <br />
-              worth knowing.
-            </h2>
-            <p>
-              Everything you need{' '}
-              <br />
-              to plan your participation.
-            </p>
-          </div>
-          <div className="faq-list">
-            {[
-              [
-                'Who can participate?',
-                'The Suratgarh event is exclusively for airwarriors and their families. Registration requires email sign-in and the station invitation code shared by the organising team.',
-              ],
-              [
-                'Which distances can I choose from?',
-                'Choose the 5 KM Fun Run for ₹399, the 10 KM Challenge Run for ₹899, or the 21 KM Half Marathon for ₹899. Timed BIBs are included for the 10 KM and 21 KM categories.',
-              ],
-              [
-                'What is included in my registration?',
-                'Your registration includes an official race tee, finisher medal, participation certificate, runner cap, refreshments, energy drink, race photographs and a goodie bag.',
-              ],
-              [
-                'How does payment confirmation work?',
-                'When Suratgarh payments open, pay using the station payment details and upload your screenshot with the transaction reference. Uploading a receipt means your payment is awaiting review. The organising team verifies the transaction before confirming your entry.',
-              ],
-              [
-                'How do I check my entry?',
-                'Use My entry at the top of this page and sign in with the email used for registration. You can check submitted entries and payment status even after new registrations close, once the registration service is available.',
-              ],
-              [
-                'Which T-shirt size should I choose?',
-                'The supplier’s size guide is being finalised. If you are unsure, especially for a child, contact the organising team before choosing a size. Your selected size is shown again when you review the entry.',
-              ],
-              [
-                'Where can I see the route and reporting instructions?',
-                'Suratgarh route maps, assembly points and reporting instructions will be published in the Race day section after they are finalised.',
-              ],
-              [
-                'When does registration close?',
-                'The shared event registration deadline is 27 September 2026. Race day is Sunday, 4 October 2026, from 05:00 AM to 10:00 AM IST.',
-              ],
-            ].map(([q, a]) => (
-              <details key={q}>
-                <summary>
-                  {q}
-                  <span aria-hidden="true">+</span>
-                </summary>
-                <p>{a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-        <section id="contact" className="contact-section">
-          <div>
-            <div className="eyebrow">YOUR STATION ORGANISING TEAM</div>
-            <h2>
-              A little help
-              <br />
-              before the start?
-            </h2>
-            <p>For invitation codes, registration and race-day enquiries.</p>
-          </div>
-          <div className="contact-actions">
-            {[
-              ['88384 63776', '8838463776'],
-              ['70279 64880', '7027964880'],
-            ].map(([label, phone]) => (
-              <a key={phone} href={`tel:+91${phone}`}>
-                <Phone size={20} />
-                <span>
-                  <small>MARATHON ENQUIRIES</small>
-                  <b>{label}</b>
-                </span>
-                <ArrowUpRight size={20} />
-              </a>
-            ))}
-          </div>
-        </section>
-        <section className="closing-banner">
-          <div>
-            <div className="eyebrow light">4 OCTOBER 2026 / SURATGARH</div>
-            <h2>See you at the start line.</h2>
-            <p>Run, soar, inspire. Together.</p>
-          </div>
-          <a className="button orange" href="#races">
-            {action} <ArrowRight size={21} />
-          </a>
-        </section>
-      </main>
-      <footer>
-        <div className="footer-top">
-          <a className="brand footer-brand" href="#main">
-            <img
-              src={`${base}/assets/sekhon-logo.webp`}
-              alt="Sekhon Marathon"
-            />
-            <span>
-              <b>SEKHON MARATHON 2026</b>
-              <small>AIR FORCE STATION SURATGARH</small>
-            </span>
-          </a>
-          <p>
-            A tribute marathon celebrating courage,
-            <br />
-            endurance and the spirit of the Indian Air Force.
-          </p>
-          <div className="footer-contact">
-            <span>MARATHON ENQUIRIES</span>
-            <a href="tel:+918838463776">+91 88384 63776</a>
-            <a href="tel:+917027964880">+91 70279 64880</a>
-          </div>
-        </div>
-        <button
-          className="text-link footer-entry"
-          onClick={() => setSelected('status')}
-        >
-          My entry &amp; payment status <ArrowUpRight size={18} />
-        </button>
-        <div className="policy-links">
-          <button onClick={() => setPolicy('terms')}>Terms & Conditions</button>
-          <button onClick={() => setPolicy('privacy')}>Privacy Policy</button>
-          <button onClick={() => setPolicy('refund')}>Refund Policy</button>
-        </div>
-        <div className="footer-bottom">
-          <span>© 2026 Sekhon Marathon · Suratgarh</span>
-          <span>For airwarriors & families</span>
-          <span>RUN. SOAR. INSPIRE.</span>
-        </div>
-      </footer>
-      {showSticky && !selected && !policy && (
-        <div className="mobile-register">
-          <span>
-            <small>{status}</small>
-            <b>5 KM · 10 KM · 21 KM</b>
-          </span>
-          <a className="button" href="#races">
-            View races <ArrowRight size={17} />
-          </a>
-        </div>
-      )}
+        </footer>
+        {showSticky && !selected && !policy && (
+          <nav className="s-phone-dock" aria-label="Quick race actions">
+            <a href="#races">
+              <Flag size={17} />
+              <span>Choose a race</span>
+            </a>
+            <button onClick={() => openPortal()}>
+              <UserRound size={17} />
+              <span>My race desk</span>
+            </button>
+          </nav>
+        )}
+      </div>
       {selected && (
         <Registration
-          key={selected}
-          race={selected === 'status' ? '5' : selected}
-          mode={selected === 'status' ? 'status' : 'register'}
+          race={selected}
+          onClose={() => setSelected(null)}
+          onPolicy={setPolicy}
           onChooseRace={() => {
             setSelected(null);
             requestAnimationFrame(() =>
@@ -766,8 +823,6 @@ export default function Home() {
                 ?.scrollIntoView({ behavior: 'instant' }),
             );
           }}
-          onClose={() => setSelected(null)}
-          onPolicy={setPolicy}
         />
       )}
       {policy && (

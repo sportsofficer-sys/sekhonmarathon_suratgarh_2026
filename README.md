@@ -2,25 +2,25 @@
 
 **Air Force Station Suratgarh — The land of Sun and Sand.**
 
-Mobile-first event website with original Rajasthan canvas artwork, 5/10/21 KM race selection, event information, local route placeholders, policy dialogs and a four-step registration flow. Built for GitHub Pages, with Supabase Auth/database/private screenshots and a private Google Drive organiser register.
+Mobile-first event web app with a station-focused identity, original canal-community canvas artwork, source-checked Sekhon biography and historical running photographs, 5/10/21 KM selection, registration, participant race desk and protected organiser/timing/certificate modules. Built for GitHub Pages, with Supabase Auth/database/private screenshots and a private Google Drive organiser register.
 
 ## Current launch state
 
-The public website is an event preview. Registration and payments are closed until the new Supabase project, mail delivery and Suratgarh payment/contact details are configured. Preview mode does not submit records or upload screenshots. There are no real participants or payments in this repository.
+The public website is an event preview. Registration and payments are closed until the new Supabase project, mail delivery and Suratgarh payment details are configured. Preview mode does not submit records or upload screenshots. There are no real participants or payments in this repository.
 
-Date: 4 October 2026, 05:00–10:00 IST. Registration deadline: 27 September 2026, 23:59:59 IST. Fees: 5 KM ₹399; 10 KM ₹899; 21 KM ₹899. Timing BIBs: 10 and 21 KM. Audience: airwarriors and families, gated by verified email and a station invitation code.
+Date: 4 October 2026, 05:00–10:00 IST. Registration deadline: 27 September 2026, 23:59:59 IST. Planned fees: 5 KM ₹600; 10 KM ₹700; 21 KM ₹800, subject to procurement confirmation before payments open. Organiser-managed clocks and finish recording replace RFID/chip timing. No caps. Audience: airwarriors and families, gated by verified email and a station invitation code.
 
 ## Local development and publication
 
 Use Node 24 and pnpm 11. `pnpm install`, `pnpm dev`, `pnpm typecheck`, `pnpm test`, `pnpm build`. The production frontend is a Vite static build in `dist/`, with the repository subpath configured in `vite.pages.config.ts`. Publish only `dist/` to the `gh-pages` branch, with `.nojekyll`, and configure GitHub Pages to deploy that branch's root.
 
-`app/page.tsx` holds the event content; `app/globals.css` the design; `components/registration.tsx` the registration flow. Update Suratgarh routes in the Race day section after finalisation. Original starter modules are retained; the production entry is `app/client.tsx` and the build uses `vite.pages.config.ts`.
+`app/page.tsx` holds public event content; `app/station-theme.css` the current design; `app/mobile-polish.css` retains shared registration styles; `components/registration.tsx` the registration flow. Update Suratgarh routes in the Race day section after finalisation. Original starter modules are retained; the production entry is `app/client.tsx` and the build uses `vite.pages.config.ts`.
 
 Public environment variables: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Copy `.env.example` to `.env.local` after creating the database. These are browser-safe values. Service-role, SMTP and integration secrets must never use a public prefix or enter this repository.
 
 ## Connect the new Supabase project
 
-1. Create the project in your Supabase account. Run the two files in `supabase/migrations` in order as the project owner. They create event/race configuration, private membership and invitation records, private registrations and a private `payment-receipts` bucket.
+1. Create the project in your Supabase account. Run all numbered files in `supabase/migrations` in order as the project owner. The new event-day migrations deliberately keep registration and payment flags closed. They create event/race configuration, private membership and invitation records, private registrations and a private `payment-receipts` bucket.
 2. Enable email sign-up and confirmation; disable anonymous sign-ins. Configure your SMTP provider. In the sign-in email template, include `{{ .Token }}` for the numeric email code. Configure the site URL and redirect URL to the GitHub Pages event address. Supabase's default email service is restricted and is not a production mail service.
 3. Deploy `submit-registration`. `verify_jwt=false` is deliberate: the function explicitly verifies every caller using Supabase Auth `getUser`, then checks station membership. It does not accept unauthenticated registrations. `SUPABASE_URL`, `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` are backend runtime values; set `SITE_ORIGIN=https://sportsofficer-sys.github.io`.
 4. Generate the station code using the commented owner-only setup command in migration 2. Distribute it through station channels. Only the hash is stored; no code is embedded in the website. Revoke or rotate codes and memberships through the private administration tables.
@@ -47,8 +47,24 @@ The integration neutralises spreadsheet-formula injection in user-supplied text,
 ## Verification
 
 - TypeScript check and production static build.
-- Eight Node validation tests for field allowlisting, invalid dates/categories, consent, emergency contact, transaction formats and screenshot signatures/limits.
+- `pnpm test` covers participant/receipt validation, availability/deadline boundaries, timing parsing/provenance, real PostgreSQL/RLS/RPC lifecycle tests, private certificate approval/versioning and PDF rendering with Latin/Devanagari fonts. Fixtures use synthetic records and signatures only; this is not a deployed Auth/Storage end-to-end test.
 - Twenty-three local PostgreSQL/PGlite schema/RLS/RPC checks (report in `docs/database-validation.json`). Auth/Storage service tables were stubbed for these checks; live integration remains to be verified after account setup.
 - Original artwork sources in `docs/asset-sources.md`.
 
 Do not delete uploaded receipt objects in the request path after an uncertain database response: another concurrent request may reference the file. Any later cleanup must examine old unreferenced objects through the Storage API, with no in-progress submissions.
+
+## Race desk, organiser console and certificates
+
+The new lazy-loaded `components/event-portal.tsx` exposes participant entries/results/certificates, organiser payment review, category clocks, finish capture, result review and public minimal certificate verification. See [event-day setup and operating limits](docs/event-day-platform.md). Database authority and private assets remain on Supabase; the static page cannot act as an administrator.
+
+Official times take precedence over participant submissions. Self-reported times cannot determine prizes. Reviews require the expected result revision, certificate holds persist until explicitly released, and signature approvals are versioned. Generated PDFs use a visual signature facsimile, not a cryptographic digital signature; no AOC identity or signature has been invented.
+
+## Mobile installation and later Android release
+
+The manifest and production worker provide home-screen installation metadata and a public offline information page. Private records, authentication, receipts, certificates and registration pages are never cached by that worker. Read [the mobile roadmap](docs/mobile-app-roadmap.md) for Android/iPhone installation and the later signed Android/store release. Physical device and store-release checks are still required.
+
+## Design and procurement
+
+The station brief supersedes earlier caps/chip-timing and ₹399/₹899 package assumptions. The latest design follows a navy/ivory/canal-green palette with measured text contrast. Historical photographs have year/location/source captions; the painting is a fictional impression of a thriving station community. Asset provenance is in [asset-sources](docs/asset-sources.md).
+
+The separate organiser budget calculator models 100–500 runners, planned ₹600/₹700/₹800 fees, ₹300 shirts, ₹150 medals, food alternatives and 5/10/15% contingency. These are planning allowances, not supplier commitments. The ₹20,000 seed is kept separate from earned registration revenue. Confirm supplier lead times early; the seven days between registration close and race day are not sufficient for many custom orders.

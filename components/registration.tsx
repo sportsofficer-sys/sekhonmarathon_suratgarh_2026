@@ -30,6 +30,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/lib/supabase';
 import { useEventAvailability } from '@/lib/event-availability';
+import { RACE_FEES } from '@/lib/race-data';
 import type { User } from '@supabase/supabase-js';
 
 const eventId = 'suratgarh-2026';
@@ -38,7 +39,7 @@ const raceNames: Record<string, string> = {
   '10': 'Challenge Run',
   '21': 'Half Marathon',
 };
-const fees: Record<string, number> = { '5': 399, '10': 899, '21': 899 };
+const fees = RACE_FEES;
 const participantOptions = [
   { value: 'airwarrior', label: 'Airwarrior' },
   { value: 'family', label: 'Family member' },
@@ -636,7 +637,9 @@ export function Registration({
     >
       <DialogContent className="registration-dialog" initialFocus={heading}>
         <div className="registration-header">
-          <div className="eyebrow">DESERT BRAVES / SEKHON MARATHON 2026</div>
+          <div className="eyebrow">
+            AIR FORCE STATION SURATGARH · SEKHON 2026
+          </div>
           <DialogTitle ref={heading} tabIndex={-1}>
             {title}
           </DialogTitle>
@@ -714,14 +717,19 @@ export function Registration({
                     <span>
                       <b>{distance} KM</b>
                       <small>{raceNames[distance]}</small>
-                      <small>
-                        {distance === '5' ? 'Untimed run' : 'Timed BIB'}
-                      </small>
+                      <small>Race clock</small>
                     </span>
                     <strong>₹{fees[distance]}</strong>
                   </label>
                 ))}
               </RadioGroup>
+            )}
+            {!statusMode && !active && (
+              <p className="planned-fee-note">
+                Fees shown are planned for the Suratgarh edition and will be
+                confirmed before payment opens. This preview does not accept
+                payment.
+              </p>
             )}
             {statusMode ? (
               !supabase ? (

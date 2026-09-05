@@ -12,7 +12,7 @@
       },
       {
         "heading": "2. Registration Fees",
-        "body": "5 KM Race – ₹399 10 KM Race – ₹899 21 KM Race – ₹899 Applicable registration charges must be paid through the payment options available on the website."
+        "body": "Planned fees for the Suratgarh edition are 5 KM: ₹600; 10 KM: ₹700; 21 KM: ₹800. Fees remain subject to procurement confirmation before payment opens. Pay only the amount shown with the configured Suratgarh payment details when registration is open."
       },
       {
         "heading": "3. Registration Deadline",
@@ -27,12 +27,12 @@
         "body": "Participants must participate only in the race category for which they have registered. Requests for race-category changes will be subject to availability and approval by the event organisers."
       },
       {
-        "heading": "6. Timed BIB",
-        "body": "Timed BIB facilities are applicable only to participants registered in the 10 KM and 21 KM categories."
+        "heading": "6. Race Timing and Results",
+        "body": "Timing uses an organiser-managed race clock and finish-line recording, without RFID chips or timing mats. Participant-submitted times are identified as self-reported. Competitive results and any prizes require organiser-recorded or verified results. Use your unique registration ID for entry, results and certificates."
       },
       {
         "heading": "7. Race Day Benefits",
-        "body": "Eligible registered participants may receive event benefits such as an official race T-shirt, medal, participation certificate, runner cap, refreshments and energy drink, subject to the applicable event conditions and availability."
+        "body": "The planned participant package includes an event T-shirt, medal, digital certificate, post-run food, banana and water/lemon water, subject to confirmed event arrangements. Caps are not included. Final menu, certificate eligibility and collection instructions will be published before the event."
       },
       {
         "heading": "8. Participant Fitness & Safety",
@@ -122,6 +122,10 @@
       {
         "heading": "Suratgarh contact",
         "body": "For Suratgarh event, registration or privacy assistance, contact the organising team on +91 8838463776 or +91 7027964880."
+      },
+      {
+        "heading": "Results and Certificate Verification",
+        "body": "Results are associated with your registration record. Authorised organisers may record or review finish times and corrections. A certificate verification link displays only necessary certificate information, such as participant name, race category, completion status and certificate identifier. Contact information and payment proofs are not public. Approved signature assets and generated certificate files are handled by protected backend services."
       }
     ]
   },
@@ -134,7 +138,7 @@
       },
       {
         "heading": "1. Registration Fees",
-        "body": "5 KM – ₹399 10 KM – ₹899 21 KM – ₹899"
+        "body": "Planned fees: 5 KM – ₹600; 10 KM – ₹700; 21 KM – ₹800. Final fees will be confirmed before payment opens. No payment is accepted in the preview."
       },
       {
         "heading": "2. Participant Cancellation",
