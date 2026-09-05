@@ -1,0 +1,1358 @@
+.marathon-app {
+  color: #102f3b;
+  background: #fff;
+  font-family: 'Public Sans', Arial, sans-serif;
+  line-height: 1.65;
+  min-height: 100dvh;
+}
+.marathon-app * {
+  box-sizing: border-box;
+}
+.marathon-app h1,
+.marathon-app h2,
+.marathon-app h3,
+.marathon-app p {
+  margin: 0;
+}
+.marathon-app button,
+.marathon-app a,
+.marathon-app summary {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.marathon-app button {
+  font: inherit;
+  cursor: pointer;
+}
+.marathon-app a {
+  color: inherit;
+  text-decoration: none;
+}
+.marathon-app a:focus-visible,
+.marathon-app button:focus-visible,
+.marathon-app summary:focus-visible {
+  outline: 3px solid #a14d26;
+  outline-offset: 3px;
+}
+.marathon-app main:focus,
+.marathon-app h1:focus {
+  outline: none;
+}
+.app-access {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  background: #102f3b;
+  color: #eaf1ec;
+  padding: 5px 16px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 84px;
+  padding: 15px max(28px, calc((100% - 1200px) /2));
+  background: #fff;
+  border-bottom: 1px solid #e7ebe6;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.app-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex-shrink: 0;
+  line-height: 1.1;
+}
+.app-wordmark img {
+  width: 52px;
+  height: 40px;
+  object-fit: contain;
+}
+.app-wordmark small {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 1.6px;
+  margin-bottom: 5px;
+}
+.app-wordmark b {
+  display: block;
+  font-size: 23px;
+  letter-spacing: 1px;
+  font-weight: 750;
+}
+.app-desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.app-desktop-nav a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+}
+.app-desktop-nav a[aria-current] {
+  color: #286a60;
+  border-color: #286a60;
+}
+.app-desktop-nav button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 1px solid #b5c6bd;
+  border-radius: 5px;
+  padding: 8px 15px;
+  background: white;
+}
+.app-mobile-tribute,
+.app-bottom-nav {
+  display: none;
+}
+.app-home {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.app-hero {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 42px;
+  padding: 42px 0 35px;
+  align-items: center;
+}
+.app-kicker,
+.guide-kicker,
+.tribute-kicker {
+  font-size: 13px;
+  font-weight: 650;
+  color: #805536;
+}
+.app-hero h1 {
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 76px;
+  line-height: 0.95;
+  font-weight: 600;
+  letter-spacing: -1.4px;
+  margin: 16px 0;
+}
+.app-hero h1 span {
+  color: #286a60;
+}
+.app-tagline {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+}
+.app-event-date {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  margin: 24px 0 20px;
+}
+.app-event-date svg {
+  color: #9d4e2b;
+}
+.app-event-date span {
+  color: #52665f;
+  border-left: 1px solid #bdc9c0;
+  padding-left: 10px;
+}
+.app-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  min-height: 48px;
+  padding: 12px 20px;
+  background: #286a60;
+  color: white !important;
+  border: 1px solid #286a60;
+  border-radius: 5px;
+  font-size: 14px !important;
+  font-weight: 650;
+}
+.app-primary:hover {
+  background: #20594f;
+}
+.app-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #52665f;
+  font-size: 12px;
+  margin-top: 12px !important;
+}
+.app-status > span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #9d4e2b;
+  flex-shrink: 0;
+}
+.app-painting {
+  margin: 0;
+}
+.app-painting picture,
+.app-painting img {
+  display: block;
+  width: 100%;
+}
+.app-painting img {
+  height: auto;
+  border-radius: 7px;
+}
+.app-painting figcaption {
+  font-size: 11px;
+  color: #52665f;
+  margin-top: 9px;
+}
+.app-home-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  padding: 25px 0 38px;
+  border-top: 1px solid #dfe6de;
+}
+.app-section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 9px;
+}
+.app-section-title h2 {
+  font-size: 23px;
+  letter-spacing: -0.7px;
+  font-weight: 650;
+}
+.app-section-title > span {
+  font-size: 11px;
+  color: #52665f;
+}
+.app-distance-list > a {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  padding: 13px 0;
+  min-height: 72px;
+  border-bottom: 1px solid #dfe6de;
+}
+.app-distance-list > a:hover {
+  background: #f5f7f2;
+}
+.app-distance-list > a > strong {
+  min-width: 60px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 37px;
+  line-height: 1;
+  font-weight: 600;
+}
+.app-distance-list strong small {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 11px;
+  margin-left: 5px;
+}
+.app-distance-list > a > span {
+  flex: 1;
+}
+.app-distance-list b {
+  display: block;
+  font-size: 15px;
+  font-weight: 650;
+}
+.app-distance-list em {
+  font-size: 16px;
+  font-weight: 650;
+  font-style: normal;
+}
+.app-small-note {
+  font-size: 12px;
+  color: #52665f;
+  line-height: 1.7;
+  margin-top: 12px !important;
+}
+.app-home-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+}
+.app-guide-shortcut {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 23px;
+  border: 1px solid #d3ded3;
+  border-radius: 6px;
+  background: #f1f5ee;
+}
+.app-guide-shortcut > span {
+  flex: 1;
+}
+.app-guide-shortcut b {
+  display: block;
+  font-size: 18px;
+}
+.app-guide-shortcut small {
+  display: block;
+  font-size: 13px;
+  color: #52665f;
+  margin-top: 2px;
+}
+.app-tribute-teaser {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 2px;
+}
+.app-tribute-teaser img {
+  object-fit: cover;
+  border-radius: 3px;
+  width: 72px;
+  height: 54px;
+}
+.app-tribute-teaser b {
+  display: block;
+  font-size: 15px;
+  margin: 3px 0;
+}
+.app-tribute-teaser small {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #286a60;
+}
+.app-view {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 28px 48px;
+  min-height: calc(100dvh - 215px);
+}
+.app-view h1 {
+  font-size: 38px;
+  line-height: 1.15;
+  letter-spacing: -1.3px;
+  font-weight: 700;
+  margin: 12px 0;
+}
+.app-view-header > p:not(.app-kicker):not(.app-status),
+.guide-intro,
+.tribute-intro {
+  font-size: 15px;
+  color: #52665f;
+  max-width: 660px;
+}
+.app-view-header {
+  margin-bottom: 27px;
+}
+.app-race-choices {
+  border-top: 1px solid #b9c9be;
+}
+.app-race-choice > summary,
+.guide-group > summary,
+.guide-view h2 {
+  scroll-margin-top: 100px;
+}
+.guide-collection {
+  background: #f0f5ec;
+  border: 1px solid #c5d5c5;
+  border-radius: 6px;
+  padding: 24px;
+  margin: 8px 0 26px;
+}
+.guide-collection-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+.guide-collection-title h2,
+.guide-contact-section h2,
+.guide-route-brief h2 {
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.4px;
+}
+.guide-collection-date {
+  font-size: 17px;
+  font-weight: 650;
+}
+.guide-collection-time {
+  font-size: 26px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin: 4px 0 14px !important;
+  color: #205c50;
+}
+.guide-collection-place {
+  display: flex;
+  gap: 10px;
+  font-size: 15px;
+}
+.guide-collection-place svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.guide-route-brief {
+  padding: 0 0 23px;
+  border-bottom: 1px solid #dce4db;
+  margin-bottom: 23px;
+}
+.guide-route-brief p {
+  margin-top: 9px;
+  font-size: 14px;
+  color: #52665f;
+}
+.guide-contact-section h2 {
+  margin-bottom: 15px;
+}
+.guide-view h2:focus {
+  outline: none;
+}
+@media (max-width: 700px) {
+  .guide-collection {
+    padding: 19px;
+  }
+  .guide-collection-title h2,
+  .guide-contact-section h2,
+  .guide-route-brief h2 {
+    font-size: 18px;
+  }
+  .guide-collection-date {
+    font-size: 15px;
+  }
+  .guide-collection-place {
+    font-size: 14px;
+  }
+  .registration-dialog .registration-races small {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .registration-dialog .preview-notice,
+  .registration-dialog .planned-fee-note {
+    font-size: 12px;
+  }
+  .registration-dialog .registration-steps li {
+    font-size: 11px;
+  }
+  .registration-dialog .form-grid {
+    gap: 16px;
+  }
+
+  .registration-dialog {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .registration-dialog > * {
+    min-width: 0;
+  }
+
+  .registration-dialog .registration-steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .registration-dialog .registration-steps li {
+    min-width: 0;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .registration-dialog .review-details > div {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  }
+
+  .registration-dialog .form-actions .button {
+    white-space: normal;
+  }
+}
+.app-race-choice {
+  border-bottom: 1px solid #b9c9be;
+}
+.app-race-choice summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  padding: 21px 14px;
+  min-height: 96px;
+}
+.app-race-choice summary::-webkit-details-marker {
+  display: none;
+}
+.app-race-choice summary > strong {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 43px;
+  line-height: 1;
+  min-width: 62px;
+}
+.app-race-choice summary > strong small {
+  font-size: 11px;
+  margin-left: 5px;
+  font-family: 'Public Sans', sans-serif;
+}
+.app-race-choice summary > span:nth-child(2) {
+  flex: 1;
+}
+.app-race-choice summary b {
+  display: block;
+  font-size: 17px;
+}
+.app-race-choice summary small {
+  display: block;
+  font-size: 12px;
+  color: #52665f;
+}
+.app-race-choice summary > strong small {
+  display: inline;
+}
+.app-race-choice summary > svg {
+  flex-shrink: 0;
+}
+.app-race-choice[open] {
+  background: #f3f6ef;
+}
+.app-race-choice[open] summary > svg {
+  transform: rotate(90deg);
+}
+.app-race-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+.app-race-detail {
+  padding: 0 24px 24px 96px;
+  font-size: 15px;
+  max-width: 700px;
+}
+.app-race-detail .app-primary {
+  margin-top: 18px;
+}
+.app-race-kit {
+  padding: 25px 0;
+  margin-top: 18px;
+  border-top: 1px solid #dce4db;
+}
+.app-race-kit h2 {
+  font-size: 19px;
+  margin-bottom: 16px;
+}
+.app-race-kit > div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+.app-race-kit > div span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+}
+.app-race-kit > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 13px;
+  color: #286a60 !important;
+  font-weight: 600;
+  margin-top: 12px;
+}
+.app-race-help {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  padding: 16px;
+  background: #f4f4ed;
+}
+.app-race-help svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.app-footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-top: 1px solid #dfe6de;
+  padding: 17px 0 23px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  color: #52665f;
+  font-size: 11px;
+}
+.app-footer > span {
+  padding-top: 12px;
+}
+.app-more {
+  max-width: 340px;
+}
+.app-more > summary {
+  min-height: 44px;
+  cursor: pointer;
+  padding: 9px 0;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 600;
+}
+.app-more > div {
+  display: grid;
+  border-top: 1px solid #dce4db;
+}
+.app-more button {
+  min-height: 44px;
+  text-align: right;
+  padding: 9px 0;
+  font-size: 13px;
+  border: 0;
+  background: none;
+  color: #102f3b;
+}
+.app-install {
+  font-size: 13px;
+  padding: 8px 0;
+}
+.app-install summary {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+}
+.app-install p {
+  margin-top: 10px;
+}
+.guide-essentials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 20px 0;
+  margin: 10px 0 14px;
+  font-size: 13px;
+  border-bottom: 1px solid #dce4db;
+}
+.guide-essentials > li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.guide-essentials {
+  list-style: none;
+  padding-left: 0;
+}
+.guide-group {
+  border-bottom: 1px solid #cbd8cd;
+}
+.guide-group > summary {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 2px;
+  min-height: 82px;
+  list-style: none;
+  cursor: pointer;
+}
+.guide-group > summary::-webkit-details-marker,
+.tribute-benefits > summary::-webkit-details-marker {
+  display: none;
+}
+.guide-group > summary > span {
+  flex: 1;
+}
+.guide-group > summary b,
+.guide-group > summary strong {
+  display: block;
+  font-size: 17px;
+}
+.guide-group > summary small {
+  display: block;
+  color: #52665f;
+  font-size: 13px;
+  margin-top: 2px;
+}
+.guide-group > summary > svg {
+  flex-shrink: 0;
+  width: 21px;
+}
+.guide-group[open] > summary > svg:last-child {
+  transform: rotate(180deg);
+}
+.guide-group-body {
+  padding: 0 8px 24px 36px;
+  font-size: 15px;
+}
+.guide-group-body p {
+  margin-bottom: 12px;
+}
+.guide-group-body h3 {
+  font-size: 17px;
+  margin: 18px 0 10px;
+}
+.guide-facts {
+  margin: 0 0 18px;
+}
+.guide-facts > div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 14px;
+  padding: 8px 0;
+}
+.guide-facts dt {
+  color: #52665f;
+}
+.guide-facts dd {
+  margin: 0;
+  font-weight: 600;
+}
+.guide-pending {
+  padding: 16px;
+  background: #eef3eb;
+  border-left: 3px solid #286a60;
+}
+.guide-pending p:last-child {
+  margin-bottom: 0;
+}
+.guide-kit-list {
+  padding-left: 18px;
+  line-height: 1.9;
+}
+.guide-faq {
+  border-bottom: 1px solid #dfe6de;
+}
+.guide-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  list-style: none;
+  padding: 15px 0;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  min-height: 48px;
+}
+.guide-faq summary::-webkit-details-marker {
+  display: none;
+}
+.guide-faq summary svg {
+  flex-shrink: 0;
+}
+.guide-faq[open] summary svg {
+  transform: rotate(180deg);
+}
+.guide-faq p {
+  padding: 0 0 14px;
+  color: #52665f;
+}
+.guide-contacts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.guide-call {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  border: 1px solid #bdcec1;
+  border-radius: 5px;
+  font-weight: 650;
+  min-height: 52px;
+}
+.guide-actions,
+.tribute-actions {
+  margin-top: 28px;
+}
+.guide-actions button,
+.tribute-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 1px solid #286a60;
+  border-radius: 5px;
+  background: #286a60;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 650;
+}
+.tribute-story {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 32px;
+  margin-top: 30px;
+}
+.tribute-portrait {
+  margin: 0;
+}
+.tribute-portrait img {
+  display: block;
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+}
+.tribute-portrait figcaption {
+  font-size: 11px;
+  color: #52665f;
+  margin-top: 8px;
+  line-height: 1.7;
+}
+.tribute-portrait a,
+.tribute-citation a,
+.tribute-sources a,
+.tribute-photo a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.tribute-story-copy h2 {
+  font-size: 25px;
+  line-height: 1.25;
+  margin: 10px 0 15px;
+  letter-spacing: -0.7px;
+}
+.tribute-honour {
+  font-size: 12px;
+  font-weight: 650;
+  color: #8c482b;
+}
+.tribute-story-copy p {
+  font-size: 15px;
+  line-height: 1.85;
+  margin-bottom: 14px;
+}
+.tribute-citation {
+  border-left: 3px solid #b46737;
+  padding: 8px 0 8px 18px;
+  margin: 20px 0;
+  font-size: 17px;
+}
+.tribute-citation cite {
+  display: block;
+  font-size: 12px;
+  font-style: normal;
+  margin-top: 8px;
+  color: #52665f;
+}
+.tribute-running {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  border-top: 1px solid #dce4db;
+  margin-top: 30px;
+  padding-top: 30px;
+  align-items: start;
+}
+.tribute-photo {
+  margin: 0;
+}
+.tribute-photo img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+.tribute-photo figcaption {
+  font-size: 11px;
+  line-height: 1.7;
+  color: #52665f;
+  margin-top: 8px;
+}
+.tribute-running-copy h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  letter-spacing: -0.6px;
+}
+.tribute-running-copy p {
+  font-size: 15px;
+  line-height: 1.85;
+  margin-bottom: 15px;
+}
+.tribute-benefits {
+  margin-top: 24px;
+  border-top: 1px solid #ccd9cd;
+  border-bottom: 1px solid #ccd9cd;
+}
+.tribute-benefits > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 16px 0;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 650;
+  list-style: none;
+}
+.tribute-benefits > summary > span {
+  flex: 1;
+}
+.tribute-benefits[open] > summary > svg:last-child {
+  transform: rotate(180deg);
+}
+.tribute-benefits-body {
+  padding: 0 0 20px;
+  font-size: 14px;
+}
+.tribute-health-list {
+  display: grid;
+  gap: 15px;
+  padding: 0;
+  list-style: none;
+}
+.tribute-health-list li {
+  display: flex;
+  gap: 12px;
+}
+.tribute-health-list svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.tribute-health-list h3 {
+  font-size: 16px;
+  margin: 0 0 4px;
+}
+.tribute-sources {
+  color: #52665f;
+  font-size: 12px !important;
+  margin-top: 16px !important;
+}
+@media (max-width: 1260px) {
+  .app-home {
+    margin: 0 28px;
+  }
+  .app-footer {
+    margin: 0 28px;
+  }
+}
+@media (max-width: 900px) {
+  .app-desktop-nav {
+    gap: 16px;
+    font-size: 12px;
+  }
+  .app-hero {
+    gap: 26px;
+  }
+  .app-hero h1 {
+    font-size: 65px;
+  }
+  .app-home-grid {
+    gap: 28px;
+  }
+  .app-wordmark b {
+    font-size: 21px;
+  }
+}
+@media (max-width: 700px) {
+  .marathon-app {
+    padding-bottom: calc(74px + env(safe-area-inset-bottom));
+  }
+  .app-access {
+    padding: 4px 15px;
+    font-size: 10px;
+  }
+  .app-header {
+    min-height: 68px;
+    padding: 12px 20px;
+    gap: 10px;
+  }
+  .app-wordmark {
+    gap: 8px;
+  }
+  .app-wordmark img {
+    width: 40px;
+    height: 32px;
+  }
+  .app-wordmark small {
+    font-size: 8px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .app-wordmark b {
+    font-size: 20px;
+    letter-spacing: 0.7px;
+  }
+  .app-desktop-nav {
+    display: none;
+  }
+  .app-mobile-tribute {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 5px;
+    font-size: 11px;
+    font-weight: 650;
+    color: #286a60 !important;
+  }
+  .app-bottom-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: fixed;
+    z-index: 35;
+    inset: auto 0 0;
+    padding: 7px 10px calc(8px + env(safe-area-inset-bottom));
+    background: #fff;
+    border-top: 1px solid #d5dfd4;
+    box-shadow: 0 -3px 16px #102f3b08;
+  }
+  .app-bottom-nav > a,
+  .app-bottom-nav > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    min-height: 49px;
+    border: 0;
+    background: transparent;
+    font-size: 11px;
+    font-weight: 550;
+    color: #52665f;
+    border-radius: 5px;
+  }
+  .app-bottom-nav > [aria-current] {
+    background: #eaf1e7;
+    color: #205c50;
+    font-weight: 750;
+  }
+  .app-home {
+    margin: 0;
+  }
+  .app-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    background: #f6f3ea;
+  }
+  .app-hero-copy {
+    padding: 23px 22px 20px;
+  }
+  .app-kicker {
+    font-size: 12px;
+  }
+  .app-hero h1 {
+    font-size: 62px;
+    line-height: 0.93;
+    letter-spacing: -0.8px;
+    margin: 13px 0;
+  }
+  .app-tagline {
+    font-size: 17px;
+  }
+  .app-event-date {
+    margin: 17px 0 15px;
+    font-size: 12px;
+    gap: 7px;
+  }
+  .app-event-date span {
+    font-size: 11px;
+    padding-left: 7px;
+  }
+  .app-primary {
+    min-height: 48px;
+    padding: 11px 17px;
+    gap: 24px;
+    font-size: 14px !important;
+  }
+  .app-status {
+    font-size: 11px;
+    margin-top: 10px !important;
+  }
+  .app-painting {
+    padding: 0 15px 12px;
+  }
+  .app-painting img {
+    aspect-ratio: 4/3;
+    height: auto;
+    border-radius: 4px;
+  }
+  .app-painting figcaption {
+    font-size: 10px;
+    margin-top: 7px;
+    text-align: center;
+  }
+  .app-home-grid {
+    display: block;
+    padding: 24px 22px 25px;
+    border: 0;
+  }
+  .app-section-title h2 {
+    font-size: 22px;
+  }
+  .app-section-title > span {
+    font-size: 11px;
+  }
+  .app-distance-list > a {
+    gap: 11px;
+    min-height: 68px;
+    padding: 12px 0;
+  }
+  .app-distance-list > a > strong {
+    min-width: 46px;
+    font-size: 34px;
+  }
+  .app-distance-list strong small {
+    font-size: 10px;
+    margin-left: 3px;
+  }
+  .app-distance-list b {
+    font-size: 14px;
+  }
+  .app-distance-list em {
+    font-size: 15px;
+  }
+  .app-distance-list > a > svg {
+    width: 16px;
+  }
+  .app-small-note {
+    font-size: 12px;
+  }
+  .app-home-links {
+    margin-top: 24px;
+    gap: 20px;
+  }
+  .app-guide-shortcut {
+    padding: 17px;
+    gap: 13px;
+  }
+  .app-guide-shortcut b {
+    font-size: 16px;
+  }
+  .app-guide-shortcut small {
+    font-size: 12px;
+  }
+  .app-tribute-teaser {
+    gap: 13px;
+  }
+  .app-tribute-teaser b {
+    font-size: 14px;
+  }
+  .app-tribute-teaser small {
+    font-size: 12px;
+  }
+  .app-view {
+    padding: 27px 22px 28px;
+    min-height: calc(100dvh - 240px);
+  }
+  .app-view h1 {
+    font-size: 31px;
+    letter-spacing: -1px;
+  }
+  .app-view-header {
+    margin-bottom: 21px;
+  }
+  .app-view-header > p:not(.app-kicker):not(.app-status),
+  .guide-intro,
+  .tribute-intro {
+    font-size: 14px;
+  }
+  .app-race-choice summary {
+    gap: 11px;
+    padding: 17px 0;
+    min-height: 88px;
+  }
+  .app-race-choice summary > strong {
+    font-size: 35px;
+    min-width: 45px;
+  }
+  .app-race-choice summary > strong small {
+    font-size: 10px;
+    margin-left: 3px;
+  }
+  .app-race-choice summary b {
+    font-size: 15px;
+  }
+  .app-race-choice summary small {
+    font-size: 11px;
+  }
+  .app-race-price b {
+    font-size: 16px !important;
+  }
+  .app-race-price small {
+    font-size: 10px !important;
+  }
+  .app-race-choice summary > svg {
+    width: 14px;
+  }
+  .app-race-detail {
+    padding: 0 14px 20px;
+    font-size: 14px;
+  }
+  .app-race-detail .app-primary {
+    width: 100%;
+  }
+  .app-race-kit {
+    padding: 22px 0;
+  }
+  .app-race-kit h2 {
+    font-size: 18px;
+  }
+  .app-race-kit > div {
+    grid-template-columns: 1fr 1fr;
+    gap: 17px 12px;
+  }
+  .app-race-kit > div span {
+    font-size: 12px;
+  }
+  .app-race-help {
+    font-size: 13px;
+    padding: 14px;
+  }
+  .app-footer {
+    margin: 0 22px;
+    padding: 10px 0 16px;
+    gap: 15px;
+    font-size: 10px;
+  }
+  .app-more > summary {
+    font-size: 11px;
+  }
+  .app-more {
+    max-width: 210px;
+  }
+  .guide-essentials {
+    gap: 12px;
+    font-size: 12px;
+  }
+  .guide-group > summary {
+    padding: 17px 0;
+    gap: 12px;
+    min-height: 78px;
+  }
+  .guide-group > summary b,
+  .guide-group > summary strong {
+    font-size: 16px;
+  }
+  .guide-group > summary small {
+    font-size: 12px;
+  }
+  .guide-group-body {
+    padding: 0 0 20px;
+    font-size: 14px;
+  }
+  .guide-facts > div {
+    grid-template-columns: 98px 1fr;
+    gap: 10px;
+  }
+  .guide-faq summary {
+    font-size: 14px;
+  }
+  .guide-contacts {
+    grid-template-columns: 1fr;
+  }
+  .guide-call {
+    font-size: 15px;
+  }
+  .guide-actions {
+    margin-top: 24px;
+  }
+  .tribute-story {
+    display: block;
+    margin-top: 25px;
+  }
+  .tribute-portrait {
+    max-width: 160px;
+    margin-bottom: 20px;
+  }
+  .tribute-portrait img {
+    width: 160px;
+    height: 120px;
+  }
+  .tribute-story-copy h2 {
+    font-size: 25px;
+  }
+  .tribute-story-copy p {
+    font-size: 14px;
+    line-height: 1.85;
+  }
+  .tribute-citation {
+    font-size: 17px;
+  }
+  .tribute-running {
+    display: block;
+    margin-top: 25px;
+    padding-top: 25px;
+  }
+  .tribute-photo {
+    max-width: 240px;
+    margin: 0 auto 22px;
+  }
+  .tribute-running-copy h2 {
+    font-size: 24px;
+  }
+  .tribute-running-copy p {
+    font-size: 14px;
+  }
+  .tribute-benefits > summary {
+    font-size: 15px;
+  }
+}
+@media (max-width: 359px) {
+  .app-header {
+    padding: 10px 16px;
+  }
+  .app-mobile-tribute span {
+    display: none;
+  }
+  .app-mobile-tribute {
+    width: 44px;
+    justify-content: center;
+  }
+  .app-hero-copy {
+    padding: 22px 18px 19px;
+  }
+  .app-hero h1 {
+    font-size: 57px;
+  }
+  .app-event-date {
+    gap: 6px;
+    font-size: 11px;
+  }
+  .app-event-date span {
+    font-size: 10px;
+  }
+  .app-home-grid,
+  .app-view {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .app-race-choice summary {
+    gap: 8px;
+  }
+  .app-race-choice summary b {
+    font-size: 14px;
+  }
+  .app-race-price small {
+    font-size: 10px !important;
+  }
+  .app-race-kit > div span {
+    font-size: 12px;
+  }
+  .app-footer {
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marathon-app * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}

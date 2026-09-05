@@ -16,7 +16,7 @@ export class PortalRecovery extends Component<
     return (
       <main className="portal-recovery" role="alert">
         <p>AIR FORCE STATION SURATGARH</p>
-        <h1>Your race desk couldn’t open.</h1>
+        <h1>We couldn’t open My entry.</h1>
         <p>Check your connection and try again. Your saved entry is safe.</p>
         <div>
           <button onClick={() => window.location.reload()}>Try again</button>

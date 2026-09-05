@@ -5,6 +5,7 @@ import { registerPublicOfflineWorker } from './pwa';
 import './globals.css';
 import './mobile-polish.css';
 import './station-theme.css';
+import './app-navigation.css';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Home />

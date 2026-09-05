@@ -517,20 +517,20 @@ export function Registration({
     <ArrowRight size={17} />
   );
   const title = statusMode
-    ? 'Check your entry.'
+    ? 'Check your entry'
     : step === 4
-      ? 'Your entry was received.'
+      ? 'Entry received'
       : step === 0
-        ? 'Choose your start line.'
+        ? 'Registration'
         : step === 1
-          ? 'Tell us about your runner.'
+          ? 'Participant details'
           : step === 2
             ? preview
-              ? 'Payment preview.'
+              ? 'Payment preview'
               : active
-                ? 'Complete your payment.'
-                : 'Payment unavailable.'
-            : 'Review your entry.';
+                ? 'Complete payment'
+                : 'Payment unavailable'
+            : 'Review your entry';
   const signedIn = user && (
     <div className="signed-in">
       <Mail size={16} />
@@ -556,7 +556,7 @@ export function Registration({
           <br />
           <span>
             {statusMode
-              ? 'See your submitted entries and payment review status, even after registration closes.'
+              ? 'Check your payment status, including after registration closes.'
               : 'Sign in with your email, then enter your station code.'}
           </span>
         </p>
@@ -580,7 +580,7 @@ export function Registration({
             />
           </div>
           <button className="button" disabled={busy} type="submit">
-            Email me a sign-in code {spinner}
+            Send sign-in code {spinner}
           </button>
           <p className="privacy-hint">
             <LockKeyhole size={13} />{' '}
@@ -647,7 +647,7 @@ export function Registration({
             {statusMode
               ? 'Your entry and payment status, in one place.'
               : step === 4
-                ? 'Keep your registration reference and check your payment status below.'
+                ? 'Keep your registration reference for payment queries.'
                 : '4 October 2026 · Air Force Station Suratgarh'}
           </DialogDescription>
         </div>
@@ -672,7 +672,11 @@ export function Registration({
         {preview && (
           <div className="preview-notice">
             <Info size={16} />
-            <span>Registration preview · Nothing is saved or submitted.</span>
+            <span>
+              {step === 3
+                ? 'Preview complete · No entry or payment has been submitted.'
+                : 'Preview only · Nothing is saved or submitted.'}
+            </span>
           </div>
         )}
         {error && (
@@ -717,7 +721,6 @@ export function Registration({
                     <span>
                       <b>{distance} KM</b>
                       <small>{raceNames[distance]}</small>
-                      <small>Race clock</small>
                     </span>
                     <strong>₹{fees[distance]}</strong>
                   </label>
@@ -726,9 +729,7 @@ export function Registration({
             )}
             {!statusMode && !active && (
               <p className="planned-fee-note">
-                Fees shown are planned for the Suratgarh edition and will be
-                confirmed before payment opens. This preview does not accept
-                payment.
+                Provisional fees. Payments are not open.
               </p>
             )}
             {statusMode ? (
@@ -738,9 +739,8 @@ export function Registration({
                   <div>
                     <b>Entry lookup is not available</b>
                     <p>
-                      This site is currently a registration preview and has no
-                      participant records. For help with an existing
-                      registration or payment, call <OrganiserContacts />.
+                      For help with an existing entry or payment, call{' '}
+                      <OrganiserContacts />.
                     </p>
                   </div>
                 </div>
@@ -773,10 +773,10 @@ export function Registration({
                     </b>
                     <p>
                       {availability === 'closed'
-                        ? 'The deadline for new entries has passed. Already registered? You can still check your entry and payment status below.'
+                        ? 'The entry deadline has passed. You can still check an existing entry below.'
                         : availability === 'unavailable'
-                          ? 'We cannot confirm registration availability right now. Please try again later or contact the organising team.'
-                          : 'Suratgarh registration and payment details are being finalised. Explore the steps now; no payment is required for the preview.'}
+                          ? 'Please try again later or contact the organising team.'
+                          : 'Preview the form while payment details are finalised.'}
                     </p>
                   </div>
                 </div>
@@ -841,7 +841,7 @@ export function Registration({
         {!statusMode && step === 1 && (
           <form className="registration-form" onSubmit={nextDetails}>
             <Choice
-              label="I am registering an"
+              label="Participant type"
               name="participant-type"
               value={details.participant_type}
               options={participantOptions}
@@ -854,7 +854,7 @@ export function Registration({
                   'Full name',
                   'text',
                   'name',
-                  'Name for the BIB & certificate',
+                  'Name for your bib and certificate',
                 ],
                 [
                   'mobile',
@@ -935,14 +935,13 @@ export function Registration({
             <div id="tshirt-size-help" className="size-guide-note">
               <Info size={18} aria-hidden="true" />
               <p>
-                <b>Need help choosing a T-shirt size?</b> The supplier’s size
-                guide is awaiting confirmation. For sizing advice, call{' '}
+                <b>Size guide pending.</b> For sizing advice, call{' '}
                 <OrganiserContacts /> before submitting.
               </p>
             </div>
             <p className="privacy-hint">
-              For a child, a parent or guardian must complete the registration.
-              Eligibility remains subject to station event rules.
+              A parent or guardian must register children. Station eligibility
+              rules apply.
             </p>
             <div className="form-actions">
               <button
@@ -956,7 +955,7 @@ export function Registration({
                 <ArrowLeft size={16} /> Back
               </button>
               <button type="submit" className="button">
-                {preview ? 'See payment preview' : 'Continue to payment'}{' '}
+                {preview ? 'Payment preview' : 'Continue to payment'}{' '}
                 <ArrowRight size={17} />
               </button>
             </div>
@@ -1001,17 +1000,13 @@ export function Registration({
                 <div>
                   <img
                     src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/assets/payment-placeholder.svg`}
-                    alt="Non-payment sample QR. Payment details yet to update."
+                    alt="Sample QR code. Not for payment."
                   />
                   <strong>YET TO UPDATE</strong>
                 </div>
                 <div>
-                  <b>Suratgarh payment QR</b>
-                  <p>Sample only. Payment details are yet to be updated.</p>
-                  <span>
-                    This QR contains a placeholder message and cannot request a
-                    payment.
-                  </span>
+                  <b>Payment QR pending</b>
+                  <p>This sample code cannot request a payment.</p>
                 </div>
               </div>
             )}
@@ -1028,7 +1023,7 @@ export function Registration({
                 maxLength={64}
                 placeholder={
                   preview
-                    ? 'Optional in this preview'
+                    ? 'Optional in preview'
                     : 'Reference from your payment app'
                 }
               />
@@ -1061,7 +1056,7 @@ export function Registration({
                   <small>
                     {(file.size / 1024).toFixed(0)} KB ·{' '}
                     {preview
-                      ? 'Selected for preview only'
+                      ? 'Preview only'
                       : 'Ready for submission'}
                   </small>
                 </span>
@@ -1077,8 +1072,8 @@ export function Registration({
             <p className="privacy-hint">
               <LockKeyhole size={14} />
               {preview
-                ? 'Preview files stay on this page and are never uploaded.'
-                : 'Upload a clear screenshot with the transaction details visible. Screenshots are stored privately for verification.'}
+                ? 'Preview screenshots are not uploaded.'
+                : 'Show the transaction details clearly. Your screenshot is stored privately for verification.'}
             </p>
             <div className="form-actions">
               <button className="plain-button" onClick={() => setStep(1)}>
@@ -1120,7 +1115,10 @@ export function Registration({
                   )?.label || '—',
                 ],
                 ['Mobile', details.mobile],
-                ['Email', user?.email || 'Verified before live registration'],
+                [
+                  'Email',
+                  user?.email || 'Sign-in required when registration opens',
+                ],
                 [
                   'Date of birth',
                   new Date(`${details.dob}T12:00:00`).toLocaleDateString(
@@ -1142,9 +1140,9 @@ export function Registration({
                 ['Amount', `₹${fees[chosen]}`],
                 [
                   'Transaction reference',
-                  details.transaction_id || 'Added during live registration',
+                  details.transaction_id || 'Not added (preview)',
                 ],
-                ['Screenshot', file?.name || 'Added during live registration'],
+                ['Screenshot', file?.name || 'Not added (preview)'],
               ].map(([label, value]) => (
                 <div key={label}>
                   <dt>{label}</dt>
@@ -1175,15 +1173,6 @@ export function Registration({
                 .
               </label>
             </div>
-            {preview && (
-              <div className="notice">
-                <Info />
-                <p>
-                  This is the end of the preview. No registration or payment has
-                  been submitted.
-                </p>
-              </div>
-            )}
             {!preview && !active && (
               <div className="notice" role="status">
                 <Info />
@@ -1234,18 +1223,18 @@ export function Registration({
             <h3>Thank you, {details.full_name.split(' ')[0]}.</h3>
             <p>
               {result.payment_status === 'verified'
-                ? `Your ${chosen} KM entry is confirmed. The organising team has verified your payment.`
+                ? `Your ${chosen} KM entry is confirmed. Payment verified.`
                 : result.payment_status === 'rejected'
                   ? 'Your entry was received, but your payment could not be verified. Contact the organising team with your receipt and registration reference.'
-                  : `Your ${chosen} KM registration has been received. The organising team will verify the transaction before confirming your entry.`}
+                  : `Your ${chosen} KM entry awaits payment verification. The organising team will confirm it after review.`}
             </p>
             <div>
               <small>YOUR REGISTRATION REFERENCE</small>
               <code>{result.registration_id}</code>
             </div>
             <p>
-              Keep this reference and your payment receipt. Use “Check my entry”
-              on the event page to view the review status.
+              Keep this reference and your payment receipt. View your entries
+              below to check the payment status.
             </p>
             <button className="button" onClick={() => switchView('status')}>
               View my entries <ArrowRight size={17} />
@@ -1322,8 +1311,8 @@ export function Registration({
             )}
             {entries.length > 0 && !entriesLoading && !entriesError && (
               <p className="privacy-hint">
-                An uploaded screenshot is reviewed by the organising team. Your
-                entry is confirmed once the status shows “Payment verified”.
+                Your entry is confirmed only when the status shows “Payment
+                verified”.
               </p>
             )}
           </section>
@@ -1343,7 +1332,7 @@ export function Registration({
                 ? 'Choose a race'
                 : active
                   ? 'Register another participant'
-                  : 'Back to registration details'}
+                  : 'Back to registration'}
             </button>
             <button type="button" className="plain-button" onClick={onClose}>
               Return to event

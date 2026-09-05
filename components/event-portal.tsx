@@ -446,7 +446,7 @@ export function EventPortal({
               ? 'Organiser console'
               : view === 'verify'
                 ? 'Certificate verification'
-                : 'My race desk'}
+                : 'My entry'}
           </DialogTitle>
           <DialogDescription>
             Your entry, finish time and certificate.
@@ -490,7 +490,7 @@ export function EventPortal({
                 ? 'Certificate verification is not available yet'
                 : view === 'organiser'
                   ? 'Organiser console setup is pending'
-                  : 'Your race desk opens soon.'}
+                  : 'Your entry will appear here.'}
             </h3>
             <p>
               {view === 'verify'
