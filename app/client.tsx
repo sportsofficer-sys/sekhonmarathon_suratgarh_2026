@@ -6,6 +6,7 @@ import './globals.css';
 import './mobile-polish.css';
 import './station-theme.css';
 import './app-navigation.css';
+import './event-gallery.css';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Home />

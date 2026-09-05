@@ -775,6 +775,9 @@
 .guide-actions,
 .tribute-actions {
   margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 .guide-actions button,
 .tribute-actions button {

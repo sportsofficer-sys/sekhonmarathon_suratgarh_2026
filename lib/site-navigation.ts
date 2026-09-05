@@ -1,4 +1,4 @@
-export type SitePage = 'home' | 'races' | 'guide' | 'tribute';
+export type SitePage = 'home' | 'races' | 'guide' | 'tribute' | 'gallery';
 export type PortalView = 'participant' | 'organiser' | 'verify';
 
 export type SiteLocation =
@@ -10,6 +10,7 @@ const pageHashes: Record<SitePage, string> = {
   races: '#races',
   guide: '#guide',
   tribute: '#tribute',
+  gallery: '#gallery',
 };
 
 const portalHashes: Record<PortalView, string> = {

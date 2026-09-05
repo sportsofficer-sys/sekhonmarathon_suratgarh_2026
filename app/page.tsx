@@ -21,12 +21,14 @@ import {
   BookOpen,
   ChevronRight,
   Download,
+  Images,
 } from 'lucide-react';
 import { Registration } from '@/components/registration';
 import { PolicyDialog } from '@/components/policies';
 import { PortalRecovery } from '@/components/portal-recovery';
 import { EventGuide } from '@/components/event-guide';
 import { EventTribute } from '@/components/event-tribute';
+import { EventGallery } from '@/components/event-gallery';
 import { useEventAvailability } from '@/lib/event-availability';
 import { RACES } from '@/lib/race-data';
 import {
@@ -48,6 +50,7 @@ const titles: Record<SitePage, string> = {
   races: 'Choose your race',
   guide: 'Event guide',
   tribute: 'Why we run',
+  gallery: '2025 memories',
 };
 
 export default function Home() {
@@ -373,6 +376,18 @@ export default function Home() {
                     </small>
                   </span>
                 </a>
+                <a
+                  className="app-guide-shortcut"
+                  href="#gallery"
+                  onClick={(event) => follow(event, 'gallery')}
+                >
+                  <Images size={23} />
+                  <span>
+                    <b>2025 memories</b>
+                    <small>Last year’s event in photos</small>
+                  </span>
+                  <ChevronRight size={18} />
+                </a>
               </section>
             </div>
           </main>
@@ -471,7 +486,13 @@ export default function Home() {
           />
         )}
         {page === 'tribute' && (
-          <EventTribute onChooseRace={() => navigate('races')} />
+          <EventTribute
+            onChooseRace={() => navigate('races')}
+            onOpenGallery={() => navigate('gallery')}
+          />
+        )}
+        {page === 'gallery' && (
+          <EventGallery onChooseRace={() => navigate('races')} />
         )}
 
         <footer className="app-footer">
@@ -484,6 +505,7 @@ export default function Home() {
               </button>
               <button onClick={() => setPolicy('privacy')}>Privacy</button>
               <button onClick={() => setPolicy('refund')}>Refund policy</button>
+              <button onClick={() => navigate('gallery')}>2025 gallery</button>
               <button onClick={() => openPortal('verify')}>
                 Verify a certificate
               </button>

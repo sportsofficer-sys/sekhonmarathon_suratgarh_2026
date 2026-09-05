@@ -7,7 +7,7 @@ import {
 } from '../lib/site-navigation.ts';
 
 test('page fragments round-trip without depending on a hosting base path', () => {
-  for (const page of ['home', 'races', 'guide', 'tribute']) {
+  for (const page of ['home', 'races', 'guide', 'tribute', 'gallery']) {
     assert.equal(hashForPage(page), `#${page}`);
     assert.deepEqual(parseSiteLocation(hashForPage(page)), {
       page,

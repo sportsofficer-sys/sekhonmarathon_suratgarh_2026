@@ -37,3 +37,13 @@ The running-benefit copy is restrained and sourced from [WHO physical activity g
 The `sekhoniafmarathon` Instagram profile was requested as an idea source. Direct access failed and no specific post was verified. No unverified Instagram photograph, quote or announcement is reproduced. Event imagery is grounded in official sources above.
 
 Public Sans and Barlow Condensed are self-hosted from Google Fonts; their OFL licences are distributed in `public/fonts`. The DB app icon is a purpose-made sun/canal monogram, not an official military crest. Original event-message copy is not attributed to Sekhon, AP Singh or another real person.
+
+## Organiser-supplied 2025 gallery, 6 September 2026
+
+The organiser supplied `sekhon_marathon_work_chat_media.zip` and explicitly requested using its last-year event photographs on the website. Six inspected Suratgarh photographs are published under `public/assets/archive-2025`: registration/T-shirt distribution (01), kit collection (02), event setup (03), runners at the start (04), group warm-up (06) and the finish-area group (07). Captions identify them as a 2025 archive, because signs contain last year's date and collection hours. They do not replace the 2026 event or collection instructions.
+
+The near-duplicate setup photograph (05) and the poster for Air Force Station Bidar (08) were omitted. The organiser subsequently requested leaving out the video; no video or video poster is included in the website. The original upload remains unchanged locally.
+
+The gallery photos were resized proportionally and re-encoded as WebP, without retouching or invented details. Small separate thumbnails support a compact gallery; original source metadata is excluded from the public derivatives. Their use is based on the organiser's supplied materials and instruction, not an independently researched public reuse licence.
+
+The long visible canvas caption was removed at the organiser's request during the compact redesign. Its alternative text still identifies the illustration as a canvas painting with the canal in the distant surrounding region.

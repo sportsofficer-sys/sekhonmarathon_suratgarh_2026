@@ -14,7 +14,13 @@ const sourceSekhon = 'https://gallantryawards.gov.in/awardee/3432';
 const sourcePIB =
   'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2185553&lang=2&reg=48';
 
-export function EventTribute({ onChooseRace }: { onChooseRace: () => void }) {
+export function EventTribute({
+  onChooseRace,
+  onOpenGallery,
+}: {
+  onChooseRace: () => void;
+  onOpenGallery: () => void;
+}) {
   return (
     <main id="main" className="app-view tribute-view" tabIndex={-1}>
       <header className="tribute-header">
@@ -154,6 +160,9 @@ export function EventTribute({ onChooseRace }: { onChooseRace: () => void }) {
       </details>
 
       <div className="tribute-actions">
+        <button className="s-button" onClick={onOpenGallery}>
+          Explore the 2025 gallery <ArrowRight size={18} aria-hidden="true" />
+        </button>
         <button className="s-button" onClick={onChooseRace}>
           Find your distance <ArrowRight size={18} aria-hidden="true" />
         </button>

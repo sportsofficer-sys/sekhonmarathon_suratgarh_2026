@@ -1,6 +1,6 @@
 # Compact mobile app: plan and verification
 
-5 September 2026 · Air Force Station Suratgarh · Desert Braves
+6 September 2026 · Air Force Station Suratgarh · Desert Braves
 
 ## Implemented plan
 
@@ -10,6 +10,7 @@
 4. Remove FAQs and the marked artwork, timing and refreshment explanations. Keep both organiser telephone numbers directly available in the Event guide.
 5. Feature T-shirt collection on Saturday, 3 October 2026, 09:00–13:30, in front of SBI Bank inside the station. This does not announce bib collection. Route/reporting details remain pending.
 6. Use consistent Public Sans body text and Barlow Condensed display type. Correct grammar and punctuation, capitalise “Supreme” at the start of the citation and “Sacrifice” as requested.
+7. Add a separate “2025 memories” gallery using six organiser-supplied Suratgarh photographs. Omit the duplicate setup photo and the Bidar poster. The user's latest instruction excludes the video entirely.
 
 The painting remains a view of runners on a landscaped station road, with the canal only in the distant surrounding region. Its long visible explanatory caption has been removed. Image alternatives and historical photo credits remain.
 
@@ -19,8 +20,8 @@ Tests used the production build in a Chromium-based browser with emulated viewpo
 
 | Check | Result |
 | --- | --- |
-| Home at 320 × 740 and 390 × 844 | No horizontal overflow. Page heights 1,351 and 1,406 px respectively. |
-| Home length compared with previous 390 × 844 layout | Reduced from 8,070 to 1,406 px, approximately 83% shorter. Longer information remains reachable on separate views. |
+| Home at 320 × 740 and 390 × 844 | No horizontal overflow. Final 390 px home is 1,510 px tall, including the new gallery shortcut. |
+| Home length compared with previous 390 × 844 layout | Reduced from 8,070 to 1,510 px, approximately 81% shorter. Longer information remains reachable on separate views. |
 | Laptop at 1366 × 768 | Home, Races, Event guide and Why we run fit; no horizontal overflow. Images loaded. |
 | 5 / 10 / 21 KM actions | Correct preview distance and ₹600 / ₹700 / ₹800 planned fees. Changing the race inside registration updates the selection. |
 | Required participant fields | An empty form stays on the participant step. Synthetic valid details progress to Payment preview and Review. |
@@ -31,6 +32,8 @@ Tests used the production build in a Chromium-based browser with emulated viewpo
 | Navigation focus | Repeated Home navigation focuses the heading; direct guide anchors focus the appropriate heading. |
 | My entry and policies | Open and return actions work. Terms include collection details; Escape closes the policy dialog. |
 | Copy review | FAQs and marked notes absent. “Supreme” and “Sacrifice” correct. Policy punctuation cleaned without changing substantive terms. |
+| Photo gallery at 320 / 390 / 1366 px | No horizontal overflow. Previous wraps to photo 6; Next returns to photo 1. Thumbnail selection updates the image and accessible current state. Controls meet 44 px minimum touch size. |
+| Gallery access and media | Home and tribute shortcuts open the gallery; Choose a race returns to Races. Images load. No video element or video asset is published. |
 
 Automated checks: 40 tests, TypeScript checking and production build pass. Navigation tests include canonical links, legacy aliases, malformed hashes and certificate-query precedence. Existing tests cover registration validation, availability, database lifecycle and certificate generation. The build retains the known non-blocking shared-Supabase-import warning.
 
@@ -42,4 +45,6 @@ Physical iPhone Safari/Android testing, native browser Back and live email/payme
 
 Target: https://sportsofficer-sys.github.io/sekhonmarathon_suratgarh_2026/
 
-Production build assets: `index-B8XNYg2u.js` and `index-BkgpkLMt.css`.
+The compact redesign was first published in source commit `1931efe`, gh-pages `820c2b7`; Pages run `33984267618` succeeded. The photo-only follow-up uses production assets `index-CdHdsg_I.js` and `index-Cd_7tsEQ.css`.
+
+The six full-size gallery WebP files and six thumbnails total 1.38 MB. Only the selected main photograph is rendered; the home page links to the gallery without loading those images. Source photos are proportionally resized, without retouching. Historical dates and notices are identified as belonging to 2025.
