@@ -1,0 +1,9 @@
+project_id = "sekhonmarathon_suratgarh_2026"
+
+[functions.submit-registration]
+# The function verifies the user JWT via Auth getUser on every POST.
+verify_jwt = false
+
+[functions.drive-register]
+# Dedicated server-to-server token checked by the function; never a public key.
+verify_jwt = false

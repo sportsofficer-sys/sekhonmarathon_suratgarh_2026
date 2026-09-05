@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { validatePayload, receiptExtension, MAX_RECEIPT_BYTES } from '../supabase/functions/submit-registration/validation.ts';
+const valid={event_id:'suratgarh-2026',submission_id:'ba2acfa2-3156-45ab-b805-cf1078c5dbd0',full_name:'Sample Runner',mobile:'9123456789',dob:'1990-06-15',gender:'male',race:'10',tshirt:'M',blood_group:'O+',emergency_contact:'9234567890',city:'Suratgarh',participant_type:'airwarrior',transaction_id:'TEST-123456789',consent:true};
+test('allowlists participant fields; discards injected ownership, fee and approval',()=>{const result=validatePayload({...valid,user_id:'attacker',fee_paise:1,payment_status:'verified'});assert.equal(result.race,'10');assert.equal(result.user_id,undefined);assert.equal(result.fee_paise,undefined);assert.equal(result.payment_status,undefined);});
+test('rejects wrong event, invalid race and missing consent',()=>{for(const change of [{event_id:'other'},{race:'42'},{consent:false}])assert.throws(()=>validatePayload({...valid,...change}));});
+test('rejects impossible calendar dates and future participant dates',()=>{for(const dob of ['2026-02-30','2027-01-01','not-a-date','1900-01-01'])assert.throws(()=>validatePayload({...valid,dob}));});
+test('rejects a date after today even if before race day',()=>assert.throws(()=>validatePayload({...valid,dob:'2026-10-03'},'2026-09-05')));
+test('requires a different valid emergency number',()=>{assert.throws(()=>validatePayload({...valid,emergency_contact:valid.mobile}));assert.throws(()=>validatePayload({...valid,mobile:'12345'}));});
+test('rejects invalid transaction references',()=>{for(const transaction_id of ['123','<script>','A'.repeat(65)])assert.throws(()=>validatePayload({...valid,transaction_id}));});
+test('rejects HTML renamed as a screenshot',()=>{assert.throws(()=>receiptExtension(new TextEncoder().encode('<html>not an image</html>'),'image/png'));});
+test('checks image signature against MIME and size',()=>{assert.equal(receiptExtension(Uint8Array.from([255,216,255,1]),'image/jpeg'),'jpg');assert.throws(()=>receiptExtension(Uint8Array.from([255,216,255,1]),'image/png'));assert.throws(()=>receiptExtension(new Uint8Array(MAX_RECEIPT_BYTES+1),'image/jpeg'));});

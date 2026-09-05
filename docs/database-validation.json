@@ -1,0 +1,34 @@
+{
+  "passed": 23,
+  "checks": [
+    "schema and organizer helper execute twice without errors",
+    "event seed fails closed and fees/dates match the contract",
+    "anonymous users can read public config but not registrations or redemption RPC",
+    "authenticated clients cannot read private hashes/counters or mutate membership/config",
+    "owner-only issuer returns a random code and persists only its SHA-256",
+    "unverified email and anonymous Auth accounts cannot redeem",
+    "wrong-code attempts persist across separate RPC calls and block the fifth attempt",
+    "cooldown expiry allows correct code; membership cannot be duplicated",
+    "expired or revoked invitation codes do not grant membership",
+    "revoked membership cannot be self-restored with a valid code",
+    "invitation rotation rejects the old code and keeps existing membership",
+    "members still cannot upload directly or write registrations",
+    "closed event rejects registration even with service-role writes",
+    "rerunning seed does not reopen/reset an organizer-configured event or its payment data",
+    "valid submission sets trusted email/fee and pending_review regardless of supplied privileged fields",
+    "retries and duplicate UTR values cannot create duplicate registrations",
+    "receipt path substitution, missing receipt, and over-limit receipt are rejected",
+    "revoked membership cannot create a registration through the backend",
+    "participant field constraints reject malformed phone and unaccepted consent",
+    "owners read only their records and receipt paths; organizers can review all",
+    "owner cannot overwrite or delete uploaded receipt objects",
+    "backend review requires an active organizer and keeps participant fields immutable",
+    "passed deadline rejects new submissions but preserves owner read access"
+  ],
+  "engine": "PGlite 0.5.8 (in-memory PostgreSQL)",
+  "limitations": [
+    "Supabase auth/storage schemas are stubs; no Supabase project was contacted.",
+    "Single PGlite connection cannot verify multi-connection lock contention.",
+    "Storage MIME/size restrictions, image-byte validation, HTTP auth/CORS and SMTP require integration testing."
+  ]
+}
