@@ -21,7 +21,6 @@ import {
   BookOpen,
   ChevronRight,
   Download,
-  Images,
 } from 'lucide-react';
 import { Registration } from '@/components/registration';
 import { PolicyDialog } from '@/components/policies';
@@ -377,16 +376,23 @@ export default function Home() {
                   </span>
                 </a>
                 <a
-                  className="app-guide-shortcut"
+                  className="app-tribute-teaser"
                   href="#gallery"
                   onClick={(event) => follow(event, 'gallery')}
                 >
-                  <Images size={23} />
+                  <img
+                    src={`${base}/assets/archive-2025/04_runners_at_start_line-thumb.webp`}
+                    alt=""
+                    width="72"
+                    height="54"
+                    loading="lazy"
+                  />
                   <span>
                     <b>2025 memories</b>
-                    <small>Last year’s event in photos</small>
+                    <small>
+                      View six event photos <ArrowRight size={15} />
+                    </small>
                   </span>
-                  <ChevronRight size={18} />
                 </a>
               </section>
             </div>

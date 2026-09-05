@@ -45,6 +45,10 @@ Physical iPhone Safari/Android testing, native browser Back and live email/payme
 
 Target: https://sportsofficer-sys.github.io/sekhonmarathon_suratgarh_2026/
 
-The compact redesign was first published in source commit `1931efe`, gh-pages `820c2b7`; Pages run `33984267618` succeeded. The photo-only follow-up uses production assets `index-CdHdsg_I.js` and `index-Cd_7tsEQ.css`.
+The compact redesign was first published in source commit `1931efe`, gh-pages `820c2b7`; Pages run `33984267618` succeeded. The photo-only follow-up uses production assets `index-CdsxBAVa.js` and `index-Cd_7tsEQ.css`.
 
-The six full-size gallery WebP files and six thumbnails total 1.38 MB. Only the selected main photograph is rendered; the home page links to the gallery without loading those images. Source photos are proportionally resized, without retouching. Historical dates and notices are identified as belonging to 2025.
+The six full-size gallery WebP files and six thumbnails total 1.38 MB. Only the selected main photograph is rendered. The home page loads one 10 KB thumbnail; full-size gallery photos load when the gallery is opened. Source photos are proportionally resized, without retouching. Historical dates and notices are identified as belonging to 2025.
+
+## Additional layout reference
+
+Reviewed https://sekhoniafmarathon.in/ on phone and laptop for ideas only, as requested. Its grouped runner information, category selection and photo-led past-edition section support the current compact structure. The home gallery shortcut now uses a small authentic Suratgarh start-line thumbnail. Delhi fees, discounts, sponsors, programme, routes and registration rules were not copied. The requested FAQ removal and video exclusion remain in place.
