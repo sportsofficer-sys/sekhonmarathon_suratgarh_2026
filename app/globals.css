@@ -19,8 +19,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans, Arial);
+  --font-mono: var(--font-geist-mono, monospace);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -61,7 +61,7 @@
 }
 
 body {
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans, Arial), Arial, Helvetica, sans-serif;
 }
 
 :root {
@@ -157,7 +157,7 @@ body {
 /* Readable content across desktop and small screens. */
 .hero-description,.tribute-copy>p,.race-card>p{font-size:16px}.race-card>p{min-height:105px}.race-card li{font-size:14px}.race-top>span:first-child{font-size:10px}.race-top{min-height:32px;flex-wrap:wrap}.section-heading>p,.faq-section>div>p,.race-day-inner>div>p{font-size:16px}.faq-list summary{font-size:16px}.faq-list details>p{font-size:15px}.benefits-grid span,.benefits-note,.race-footnote{font-size:13px}.event-strip p{font-size:13px}.event-strip small{font-size:10px}.race-bottom span{font-size:12px}.route-pending p{font-size:14px}.route-note p{font-size:12px}.route-tabs [data-slot=tabs-trigger]{font-size:14px}.footer-top p{font-size:12px}.footer-bottom{font-size:12px}.race-footnote{align-items:flex-start}.race-footnote svg{margin-top:4px}
 @media(max-width:760px){.registration-dialog .notice{font-size:13px;padding:15px}.registration-races{gap:7px}.registration-races label{padding:10px 8px;gap:7px}.registration-races b{font-size:16px}.registration-races strong{font-size:13px;margin-left:23px}.registration-races small{font-size:9px}.registration-steps{gap:4px}.registration-steps li{font-size:10px;gap:4px}.registration-steps li>span{width:20px;height:20px}.form-grid{grid-template-columns:1fr;gap:17px}.form-field.wide{grid-column:auto}.selection-summary span{font-size:13px}.form-actions .button{font-size:12px;padding:14px 15px;gap:13px}.form-actions .plain-button{font-size:12px}.payment-instructions{gap:15px;padding:15px;flex-direction:column}.payment-instructions img{width:170px}.payment-instructions>div{text-align:center}.review-details>div{font-size:13px}.race-card>p{min-height:0;font-size:16px}.benefits-grid span{font-size:12px}.benefits-grid>div{padding:0 5px}.benefits-note,.race-footnote{font-size:12px}.event-strip p{font-size:11px}.event-strip small{font-size:9px}.faq-list summary{font-size:15px}.faq-list details>p{font-size:15px}.section-heading>p{font-size:15px}.policy-links{flex-wrap:wrap;gap:12px 22px}.footer-bottom{font-size:11px}.hero-description{font-size:15px}.race-top>span:first-child{font-size:11px}}
-body{font-family:var(--font-geist-sans),Arial,Helvetica,sans-serif}.hero-shade{background:linear-gradient(90deg,#031b3440,transparent 65%)}.hero-location{background:#092a3bb8;padding:10px 14px;border-radius:3px}.hero-location span{font-size:11px}.hero-location b{font-size:12px}@media(max-width:760px){.hero-shade{background:linear-gradient(90deg,#031b34b5,#041c354f),linear-gradient(0deg,#03172bd9,transparent 60%)}.hero-image{object-position:62% center}}
+body{font-family:var(--font-geist-sans, Arial),Arial,Helvetica,sans-serif}.hero-shade{background:linear-gradient(90deg,#031b3440,transparent 65%)}.hero-location{background:#092a3bb8;padding:10px 14px;border-radius:3px}.hero-location span{font-size:11px}.hero-location b{font-size:12px}@media(max-width:760px){.hero-shade{background:linear-gradient(90deg,#031b34b5,#041c354f),linear-gradient(0deg,#03172bd9,transparent 60%)}.hero-image{object-position:62% center}}
 .owner-entries{border-top:1px solid #d9e5eb;padding-top:18px}.owner-entries h3{font-size:16px;font-weight:700;margin-bottom:12px}.owner-entries>div{padding:12px;background:#f1f6f8;border-radius:6px;margin-bottom:9px}.owner-entries b,.owner-entries span,.owner-entries code{display:block;font-size:13px}.owner-entries span{color:#667f8d;margin:4px 0}.owner-entries code{font-size:11px;overflow-wrap:anywhere}
 
 .placeholder-payment{display:flex;align-items:center;gap:24px;padding:20px;background:#fff7eb;border:1px solid #efdbc1;border-radius:8px}.placeholder-payment>div:first-child{background:white;padding:10px;text-align:center;flex-shrink:0}.placeholder-payment img{width:145px;height:145px;opacity:.55}.placeholder-payment strong{display:block;font-size:12px;letter-spacing:1px;color:#9b541c;padding-top:5px}.placeholder-payment b{font-size:17px}.placeholder-payment p{font-size:15px;margin-top:8px}.placeholder-payment span{display:block;font-size:12px;color:#896c4e;margin-top:8px}@media(max-width:760px){.placeholder-payment{flex-direction:column;text-align:center}}

@@ -1,0 +1,1600 @@
+/* Responsive polish, shared typography and comfortable touch controls. */
+:root {
+  --font-geist-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  --font-geist-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+html {
+  scroll-padding-top: 106px;
+}
+body,
+button,
+input,
+select,
+textarea,
+h1,
+h2,
+h3,
+.race-distance {
+  font-family: var(--font-geist-sans, sans-serif);
+}
+body {
+  -webkit-font-smoothing: antialiased;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+.button,
+summary {
+  touch-action: manipulation;
+}
+:focus-visible {
+  outline: 3px solid #b35b1c;
+  outline-offset: 4px;
+}
+.button {
+  min-height: 48px;
+  border-radius: 7px;
+  text-decoration: none;
+  font-weight: 700;
+}
+.text-link {
+  min-height: 44px;
+}
+.topbar {
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+}
+.site-header {
+  gap: 28px;
+}
+.brand {
+  min-width: 242px;
+  gap: 12px;
+}
+.brand img {
+  width: 72px;
+  height: auto;
+  object-fit: contain;
+}
+.brand b {
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
+.brand small {
+  font-size: 11px;
+  letter-spacing: 0;
+  margin-top: 4px;
+}
+.navigation {
+  margin-left: auto;
+  gap: 22px;
+  font-size: 13px;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.entry-button {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  background: transparent;
+  border: 0;
+  white-space: nowrap;
+  color: #153c4f;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.nav-cta {
+  margin: 0;
+  padding: 13px 19px;
+}
+.menu-button {
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+  align-items: center;
+}
+.hero {
+  min-height: 720px;
+}
+.hero-picture {
+  position: absolute;
+  inset: 0;
+}
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.hero-shade {
+  background: linear-gradient(
+    90deg,
+    #041d34ee 0%,
+    #041d34b0 35%,
+    #041d3400 75%
+  );
+}
+.hero-content {
+  padding-top: 46px;
+  padding-bottom: 48px;
+  max-width: 1370px;
+  position: relative;
+  z-index: 1;
+}
+.hero .eyebrow {
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  margin-bottom: 23px;
+}
+.hero h1 {
+  font-size: clamp(60px, 5.8vw, 84px);
+  letter-spacing: -3px;
+  line-height: 0.98;
+  margin: 0;
+  font-weight: 850;
+}
+.hero h1 em {
+  color: #ffa34c;
+  font-style: normal;
+}
+.hero-subtitle {
+  font-size: 25px;
+  margin-top: 22px;
+  font-weight: 550;
+  letter-spacing: -0.6px;
+}
+.hero-description {
+  font-size: 15px;
+  line-height: 1.8;
+  margin-top: 13px;
+  color: #e0e8ee;
+}
+.hero-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 24px;
+  font-size: 14px;
+}
+.hero-facts span {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.hero-facts svg {
+  color: #edb47c;
+}
+.availability-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-top: 22px;
+  color: #fff1de;
+  font-weight: 600;
+}
+.availability-status > span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffb46a;
+}
+.status-open {
+  color: #d7f3de;
+}
+.status-open > span {
+  background: #9de5b2;
+}
+.hero-actions {
+  margin-top: 14px;
+  align-items: center;
+  gap: 20px;
+}
+.hero-actions .button {
+  padding: 16px 22px;
+  font-size: 14px;
+}
+.hero-distances {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: #eef3f6;
+  font-size: 12px;
+  font-weight: 650;
+}
+.hero-distances i {
+  width: 3px;
+  height: 3px;
+  background: #dcaa70;
+  border-radius: 50%;
+}
+.hero-restriction {
+  font-size: 12px;
+  color: #dce5ed;
+  margin-top: 18px;
+}
+.hero-location {
+  bottom: 30px;
+  right: 5%;
+}
+.event-strip {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.event-strip small {
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.event-strip strong {
+  font-size: 16px;
+}
+.event-strip p {
+  font-size: 12px;
+  color: #526a77;
+}
+.section-heading h2 {
+  font-size: 42px;
+  line-height: 1.12;
+  letter-spacing: -1.6px;
+}
+.section-heading > p {
+  color: #516a78;
+}
+.race-availability {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 18px;
+  border: 1px solid #e4d7c2;
+  border-radius: 7px;
+  background: #fcf7ee;
+  color: #634f34;
+  font-size: 13px;
+  line-height: 1.65;
+  margin-bottom: 22px;
+}
+.race-availability svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.race-availability b {
+  font-weight: 650;
+}
+.race-overview {
+  display: none;
+}
+.race-card {
+  scroll-margin-top: 105px;
+  border-radius: 12px;
+  padding: 26px;
+}
+.race-top {
+  min-height: 37px;
+  gap: 8px;
+}
+.race-top > span:first-child {
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.race-distance {
+  font-size: 86px;
+  line-height: 1;
+  letter-spacing: -5px;
+  font-weight: 750;
+  margin: 17px 0 12px;
+}
+.race-distance span {
+  font-size: 18px;
+  letter-spacing: 0;
+  margin-left: 5px;
+}
+.race-card h3 {
+  font-size: 24px;
+  letter-spacing: -0.7px;
+}
+.race-card > p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin-top: 15px;
+  min-height: 108px;
+}
+.race-card ul {
+  margin-top: 22px;
+  gap: 10px;
+}
+.race-card li {
+  font-size: 13px;
+}
+.race-bottom {
+  gap: 16px;
+  padding-top: 22px;
+}
+.race-bottom strong {
+  font-size: 27px;
+}
+.race-bottom span {
+  font-size: 11px;
+}
+.race-select {
+  width: auto;
+  height: auto;
+  min-height: 48px;
+  border-radius: 7px;
+  padding: 12px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #143d50;
+  color: white;
+  white-space: nowrap;
+}
+.race-1 .race-select {
+  background: #ffa34c;
+  color: #173345;
+}
+.race-2 .race-select {
+  background: #143d50;
+  color: white;
+}
+.race-footnote {
+  color: #516a78;
+}
+.registration-guide {
+  padding-top: 42px;
+  padding-bottom: 58px;
+  border-top: 1px solid #e3e9ec;
+}
+.registration-guide .section-heading {
+  align-items: center;
+  margin-bottom: 28px;
+}
+.registration-guide h2 {
+  font-size: 31px;
+}
+.registration-guide .text-link {
+  font-size: 13px;
+}
+.registration-guide ol {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+.registration-guide li {
+  display: flex;
+  gap: 15px;
+}
+.registration-guide li > svg {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  color: #9f5925;
+}
+.registration-guide li b {
+  font-size: 14px;
+  font-weight: 700;
+}
+.registration-guide li p {
+  font-size: 13px;
+  color: #536d7b;
+  margin-top: 8px;
+  line-height: 1.8;
+}
+.tribute-section {
+  padding-top: 28px;
+}
+.legacy-photo {
+  margin: 0;
+  align-self: center;
+}
+.legacy-photo > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+.legacy-photo figcaption {
+  padding: 16px 2px 0;
+}
+.legacy-photo b {
+  display: block;
+  font-size: 17px;
+  letter-spacing: -0.3px;
+}
+.legacy-photo span {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: #526a77;
+}
+.legacy-photo a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.tribute-copy h2 {
+  font-size: 37px;
+  line-height: 1.2;
+}
+.tribute-copy > p {
+  font-size: 15px;
+  line-height: 1.9;
+}
+.tribute-stat span {
+  font-size: 9px;
+  line-height: 1.8;
+  color: #516d7b;
+}
+.benefits-grid span {
+  font-size: 12px;
+  color: #2e5060;
+}
+.benefits-note {
+  color: #536d7b;
+}
+.route-tabs {
+  height: 49px !important;
+}
+.route-tabs [data-slot='tabs-trigger'] {
+  min-height: 39px;
+}
+.status-chip {
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.route-note p {
+  font-size: 12px;
+}
+.faq-list summary {
+  padding: 4px 0;
+  min-height: 44px;
+  line-height: 1.6;
+  font-size: 15px;
+}
+.faq-list details {
+  padding: 13px 0;
+}
+.faq-list details > p {
+  font-size: 14px;
+  line-height: 1.85;
+  color: #516a77;
+}
+.contact-section {
+  max-width: 1233px;
+  margin: 0 auto 64px;
+  padding: 34px 38px;
+  border-radius: 12px;
+  background: #f6f1e7;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+.contact-section h2 {
+  font-size: 31px;
+  line-height: 1.2;
+}
+.contact-section p {
+  font-size: 14px;
+  color: #5a6d74;
+  margin-top: 12px;
+}
+.contact-actions {
+  display: grid;
+  gap: 12px;
+}
+.contact-actions a {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  background: white;
+  border: 1px solid #e5dfd3;
+  padding: 18px;
+  border-radius: 8px;
+}
+.contact-actions a > span {
+  flex: 1;
+}
+.contact-actions small {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #596f7a;
+  margin-bottom: 4px;
+}
+.contact-actions b {
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+.closing-banner h2 {
+  font-size: 35px;
+  line-height: 1.2;
+}
+.closing-banner .button {
+  flex-shrink: 0;
+}
+.footer-top .text-link {
+  font-size: 12px;
+}
+.footer-bottom,
+.footer-top p,
+.policy-links {
+  color: #536977;
+}
+.policy-links button {
+  min-height: 44px;
+  padding: 8px 0;
+}
+.footer-brand small {
+  font-size: 10px;
+}
+.footer-entry {
+  margin-top: 20px;
+  font-size: 13px;
+}
+.registration-dialog {
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.registration-dialog [data-slot='dialog-close'] {
+  width: 44px;
+  height: 44px;
+  top: 8px;
+  right: 8px;
+  background: #fff;
+  border: 1px solid #dbe5e9;
+  border-radius: 50%;
+}
+.registration-header {
+  padding-right: 28px;
+  outline: none;
+}
+.registration-mode-switch {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+}
+.registration-mode-switch button,
+.entry-support a {
+  min-height: 44px;
+}
+.size-guide-note {
+  grid-column: 1/-1;
+  background: #f6f3ed;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: #526674;
+}
+.size-guide-note summary {
+  font-weight: 650;
+  cursor: pointer;
+  min-height: 32px;
+}
+.size-guide-note a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: inline-block;
+  padding: 6px 0;
+}
+.owner-entries-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.entry-status {
+  display: inline-block !important;
+  border-radius: 5px;
+  background: #fff0d9;
+  padding: 5px 8px;
+  color: #75511d !important;
+  font-size: 12px !important;
+}
+.entry-reference {
+  overflow-wrap: anywhere;
+  font-size: 11px;
+}
+.entry-support {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #4b6776;
+}
+.owner-entries > .owner-entries-heading {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 14px;
+}
+.owner-entry {
+  padding: 18px;
+  border: 1px solid #dce6eb;
+  border-radius: 8px;
+  background: #f5f8fa;
+  margin-bottom: 14px;
+}
+.owner-entry > b,
+.owner-entry > span {
+  display: block;
+}
+.owner-entry > b {
+  font-size: 16px;
+}
+.owner-entry > span {
+  font-size: 13px;
+  margin-top: 7px;
+}
+.entry-reference {
+  margin-top: 14px;
+}
+.entry-reference small,
+.entry-reference code {
+  display: block;
+}
+.entry-reference small {
+  margin-bottom: 5px;
+  color: #536b79;
+}
+.entry-status.verified {
+  background: #e4f3e9;
+  color: #285d40 !important;
+}
+.entry-status.rejected {
+  background: #fde9e7;
+  color: #8c3232 !important;
+}
+.size-guide-note {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.size-guide-note > svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.size-guide-note b {
+  display: block;
+  margin-bottom: 4px;
+}
+.registration-mode-switch {
+  font-size: 13px;
+  color: #526a78;
+  align-items: center;
+}
+.entry-support a,
+.notice a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.form-field input::placeholder {
+  color: #617984;
+}
+.form-field small,
+.privacy-hint {
+  color: #536b79;
+}
+.form-actions .plain-button {
+  min-height: 44px;
+  padding: 8px;
+}
+.consent-row label {
+  font-size: 13px;
+  color: #445f6e;
+}
+.review-details dt {
+  color: #526876;
+}
+
+@media (max-width: 1200px) {
+  .site-header {
+    gap: 16px;
+  }
+  .brand {
+    min-width: 220px;
+  }
+  .navigation {
+    gap: 16px;
+    font-size: 12px;
+  }
+  .header-actions {
+    gap: 10px;
+  }
+  .nav-cta {
+    display: none;
+  }
+  .contact-section {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  .race-card {
+    padding: 22px;
+  }
+  .race-bottom {
+    flex-wrap: wrap;
+  }
+  .race-select {
+    flex-grow: 1;
+    justify-content: center;
+  }
+}
+@media (max-width: 760px) {
+  html {
+    scroll-padding-top: 86px;
+  }
+  .topbar {
+    font-size: 10px;
+    letter-spacing: 0.6px;
+    padding: 7px 16px;
+    min-height: 30px;
+  }
+  .topbar svg {
+    width: 13px;
+  }
+  .site-header {
+    padding: 10px 18px;
+    min-height: 72px;
+    gap: 10px;
+  }
+  .brand {
+    min-width: 0;
+    flex: 1;
+    gap: 8px;
+  }
+  .brand img {
+    width: 43px;
+    height: 40px;
+    object-fit: contain;
+  }
+  .brand b {
+    font-size: 13px;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+  }
+  .brand small {
+    font-size: 9px;
+    line-height: 1.4;
+    letter-spacing: 0;
+    margin-top: 3px;
+  }
+  .header-actions {
+    gap: 4px;
+  }
+  .entry-button {
+    width: 44px;
+    padding: 0;
+    border: 1px solid #dde5e9;
+    border-radius: 7px;
+  }
+  .entry-button > span {
+    display: none;
+  }
+  .menu-button {
+    padding: 10px;
+  }
+  .navigation {
+    top: 100%;
+    padding: 12px 18px 18px;
+    box-shadow: 0 15px 30px #102e411c;
+  }
+  .navigation a {
+    font-size: 15px;
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 5px;
+  }
+  .hero {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: #071f32;
+    overflow: hidden;
+  }
+  .hero-picture {
+    position: relative;
+    inset: auto;
+    order: 2;
+    width: 100%;
+    display: block;
+  }
+  .hero-image {
+    display: block;
+    position: static;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    object-position: center;
+  }
+  .hero-shade,
+  .hero-location {
+    display: none;
+  }
+  .hero-content {
+    order: 1;
+    padding: 28px 24px 25px;
+    width: 100%;
+  }
+  .hero .eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    margin: 0 0 17px;
+  }
+  .hero .eyebrow > span {
+    width: 5px;
+    height: 5px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 10.3vw, 56px);
+    line-height: 0.98;
+    letter-spacing: -1.5px;
+    font-weight: 800;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    margin-top: 15px;
+    line-height: 1.4;
+    letter-spacing: -0.3px;
+  }
+  .hero-description {
+    font-size: 12px;
+    line-height: 1.7;
+    margin-top: 9px;
+    max-width: 330px;
+  }
+  .desktop-break {
+    display: none;
+  }
+  .hero-facts {
+    margin-top: 19px;
+    gap: 8px 15px;
+    font-size: 12px;
+  }
+  .hero-facts span {
+    gap: 7px;
+  }
+  .hero-facts svg {
+    width: 15px;
+    height: 15px;
+  }
+  .availability-status {
+    font-size: 11px;
+    margin-top: 18px;
+  }
+  .hero-actions {
+    margin-top: 10px;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  .hero-actions .button {
+    padding: 14px 16px;
+    min-height: 49px;
+    font-size: 13px;
+    gap: 15px;
+    flex-shrink: 0;
+  }
+  .hero-distances {
+    font-size: 10px;
+    gap: 5px;
+  }
+  .hero-distances i {
+    width: 2px;
+    height: 2px;
+  }
+  .hero-restriction {
+    font-size: 10px;
+    margin-top: 13px;
+    gap: 6px;
+  }
+  .hero-restriction svg {
+    width: 14px;
+    flex-shrink: 0;
+  }
+  .event-strip {
+    padding: 9px 22px 15px;
+    gap: 0 12px;
+  }
+  .event-strip > div {
+    padding: 18px 0 !important;
+    gap: 9px;
+    align-items: flex-start;
+  }
+  .event-strip svg {
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+  }
+  .event-strip small {
+    font-size: 9px;
+    letter-spacing: 0.7px;
+  }
+  .event-strip strong {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .event-strip p {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+  .section {
+    padding: 43px 22px;
+  }
+  .section-heading {
+    margin-bottom: 22px;
+  }
+  .section-heading h2,
+  h2 {
+    font-size: 31px;
+    letter-spacing: -1px;
+    line-height: 1.13;
+  }
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+  .section-heading > p {
+    font-size: 14px;
+    margin-top: 13px;
+    line-height: 1.7;
+  }
+  .mobile-break {
+    display: none;
+  }
+  .race-availability {
+    font-size: 12px;
+    padding: 12px 13px;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .race-availability b {
+    display: block;
+  }
+  .race-availability svg {
+    width: 16px;
+  }
+  .race-overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 23px;
+  }
+  .race-overview a {
+    padding: 12px 5px;
+    border: 1px solid #d8e3e8;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    background: #fff;
+  }
+  .race-overview b {
+    font-size: 22px;
+    letter-spacing: -0.8px;
+  }
+  .race-overview b span {
+    font-size: 11px;
+    letter-spacing: 0;
+  }
+  .race-overview a > span {
+    font-size: 13px;
+    font-weight: 650;
+  }
+  .race-overview small {
+    font-size: 10px;
+    color: #586d79;
+  }
+  .race-grid {
+    gap: 16px;
+  }
+  .race-card {
+    padding: 21px;
+    border-radius: 10px;
+    scroll-margin-top: 86px;
+  }
+  .race-top {
+    min-height: 25px;
+  }
+  .race-top > span:first-child {
+    font-size: 9px;
+    letter-spacing: 0.7px;
+  }
+  .timed-tag {
+    font-size: 8px;
+    padding: 4px 6px;
+  }
+  .race-card-heading {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin: 12px 0 14px;
+  }
+  .race-distance {
+    font-size: 60px;
+    letter-spacing: -3px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+  .race-distance span {
+    font-size: 14px;
+    margin-left: 4px;
+  }
+  .race-card h3 {
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    max-width: 135px;
+  }
+  .race-card > p {
+    min-height: 0;
+    font-size: 14px;
+    line-height: 1.75;
+    margin-top: 0;
+  }
+  .race-card ul {
+    font-size: 12px;
+    margin: 17px 0 20px;
+    gap: 8px;
+  }
+  .race-card li {
+    font-size: 12px;
+  }
+  .race-bottom {
+    flex-wrap: nowrap;
+    gap: 12px;
+    padding-top: 17px;
+  }
+  .race-bottom strong {
+    font-size: 27px;
+  }
+  .race-bottom span {
+    font-size: 10px;
+  }
+  .race-select {
+    min-height: 46px;
+    padding: 12px;
+    font-size: 12px;
+    flex-grow: 0;
+    border-radius: 7px;
+    gap: 8px;
+  }
+  .race-footnote {
+    font-size: 11px;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .registration-guide {
+    padding-top: 30px;
+    padding-bottom: 38px;
+  }
+  .registration-guide .section-heading {
+    margin-bottom: 24px;
+  }
+  .registration-guide h2 {
+    font-size: 27px;
+  }
+  .registration-guide .text-link {
+    font-size: 12px;
+    margin-top: 12px;
+  }
+  .registration-guide ol {
+    grid-template-columns: 1fr;
+    gap: 21px;
+  }
+  .registration-guide li {
+    gap: 14px;
+  }
+  .registration-guide li > svg {
+    width: 23px;
+    height: 23px;
+  }
+  .registration-guide li b {
+    font-size: 14px;
+  }
+  .registration-guide li p {
+    font-size: 13px;
+    margin-top: 5px;
+  }
+  .tribute-section {
+    padding: 18px 22px 0;
+    gap: 28px;
+  }
+  .legacy-photo > img {
+    border-radius: 9px;
+  }
+  .legacy-photo b {
+    font-size: 16px;
+  }
+  .legacy-photo span {
+    font-size: 10px;
+  }
+  .tribute-copy h2 {
+    font-size: 30px;
+  }
+  .tribute-copy > p {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+  .tribute-stat {
+    margin-top: 24px;
+    gap: 26px;
+  }
+  .tribute-stat strong {
+    font-size: 24px;
+  }
+  .tribute-stat span {
+    font-size: 8px;
+  }
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+    border: 1px solid #dee7eb;
+    border-radius: 9px;
+    padding: 0;
+    gap: 0;
+  }
+  .benefits-grid > div {
+    padding: 19px 13px;
+    flex-direction: row;
+    gap: 11px;
+    border: 0;
+    border-bottom: 1px solid #e0e8ec;
+    justify-content: flex-start;
+  }
+  .benefits-grid > div:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+  .benefits-grid > div:nth-child(odd) {
+    border-right: 1px solid #e0e8ec;
+  }
+  .benefits-grid svg {
+    width: 23px;
+    flex-shrink: 0;
+  }
+  .benefits-grid span {
+    font-size: 11px;
+    line-height: 1.4;
+    text-align: left;
+  }
+  .benefits-note {
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .race-day-section {
+    padding: 40px 22px;
+  }
+  .race-day-inner {
+    gap: 29px;
+  }
+  .race-day-inner h2 {
+    font-size: 31px;
+  }
+  .race-day-inner > div > p {
+    font-size: 14px;
+  }
+  .countdown > div {
+    gap: 32px;
+  }
+  .route-panel {
+    padding: 20px 16px;
+    border-radius: 9px;
+  }
+  .route-title h3 {
+    font-size: 19px;
+  }
+  .route-pending {
+    padding: 24px 8px;
+    min-height: 225px;
+  }
+  .route-pending p {
+    font-size: 13px;
+  }
+  .route-note p {
+    font-size: 11px;
+  }
+  .faq-section {
+    gap: 24px;
+  }
+  .faq-list summary {
+    font-size: 14px;
+    gap: 18px;
+  }
+  .faq-list details > p {
+    font-size: 13px;
+    margin-right: 0;
+  }
+  .faq-section > div > p {
+    font-size: 14px;
+  }
+  .contact-section {
+    margin: 0 22px 40px;
+    padding: 25px 20px;
+    grid-template-columns: 1fr;
+    gap: 21px;
+  }
+  .contact-section h2 {
+    font-size: 28px;
+  }
+  .contact-section p {
+    font-size: 13px;
+  }
+  .contact-actions a {
+    padding: 15px 12px;
+    gap: 11px;
+  }
+  .contact-actions b {
+    font-size: 19px;
+  }
+  .contact-actions small {
+    font-size: 8px;
+  }
+  .closing-banner {
+    padding: 35px 22px;
+  }
+  .closing-banner h2 {
+    font-size: 30px;
+  }
+  .closing-banner .button {
+    margin-top: 22px;
+    font-size: 13px;
+  }
+  footer {
+    padding: 30px 22px 112px;
+  }
+  .footer-brand b {
+    font-size: 12px;
+  }
+  .footer-brand small {
+    font-size: 10px;
+  }
+  .footer-brand img {
+    width: 50px;
+  }
+  .footer-top {
+    display: block;
+  }
+  .footer-top p {
+    font-size: 12px;
+    margin-top: 20px;
+  }
+  .footer-contact {
+    margin-top: 20px;
+  }
+  .footer-entry {
+    margin-top: 15px;
+    font-size: 13px;
+  }
+  .policy-links {
+    font-size: 11px;
+    gap: 4px 18px;
+    margin-top: 17px;
+  }
+  .footer-bottom {
+    font-size: 10px;
+    margin-top: 18px;
+    line-height: 1.8;
+    padding-top: 16px;
+  }
+  .mobile-register {
+    padding: 11px 18px calc(11px + env(safe-area-inset-bottom));
+    gap: 10px;
+  }
+  .mobile-register small {
+    font-size: 9px;
+    letter-spacing: 0;
+    color: #526a78;
+    max-width: 175px;
+  }
+  .mobile-register b {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .mobile-register .button {
+    min-height: 45px;
+    padding: 12px 15px;
+    font-size: 12px;
+    gap: 10px;
+    white-space: nowrap;
+  }
+  .registration-dialog {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100dvh;
+    max-height: 100dvh;
+    top: 0;
+    left: 0;
+    transform: none;
+    translate: none;
+    border: 0;
+    border-radius: 0;
+    padding: 24px 22px calc(30px + env(safe-area-inset-bottom)) !important;
+    align-content: start;
+    gap: 16px;
+  }
+  .registration-dialog [data-slot='dialog-title'] {
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+    padding-right: 25px;
+  }
+  .registration-dialog [data-slot='dialog-description'] {
+    font-size: 12px;
+    line-height: 1.75;
+  }
+  .registration-dialog > div > .eyebrow {
+    font-size: 9px;
+    line-height: 1.6;
+    padding-right: 18px;
+  }
+  .registration-header {
+    padding-right: 22px;
+  }
+  .registration-dialog [data-slot='dialog-close'] {
+    position: fixed;
+    z-index: 3;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+  }
+  .registration-steps {
+    padding: 4px 0 17px;
+    gap: 5px;
+  }
+  .registration-steps li {
+    font-size: 10px;
+  }
+  .registration-steps li > span {
+    width: 21px;
+    height: 21px;
+    flex-shrink: 0;
+  }
+  .registration-races {
+    gap: 8px;
+  }
+  .registration-races label {
+    padding: 13px 9px;
+    gap: 7px;
+    align-content: start;
+  }
+  .registration-races b {
+    font-size: 17px;
+  }
+  .registration-races small {
+    font-size: 9px;
+    line-height: 1.5;
+  }
+  .registration-races strong {
+    font-size: 13px;
+    margin-left: 0;
+    width: 100%;
+  }
+  .preview-notice {
+    font-size: 11px;
+    line-height: 1.7;
+    padding: 11px 13px;
+  }
+  .selection-summary {
+    padding: 13px 15px;
+  }
+  .selection-summary b {
+    font-size: 21px;
+  }
+  .selection-summary strong {
+    font-size: 22px;
+  }
+  .form-field label {
+    font-size: 14px;
+  }
+  .form-grid {
+    gap: 20px;
+  }
+  .form-field input,
+  .form-select {
+    height: 50px !important;
+    padding: 12px 13px;
+    border-radius: 7px;
+    border-color: #acbec8;
+  }
+  .form-field input[type='date'] {
+    display: block;
+    min-width: 0;
+  }
+  .form-actions {
+    position: sticky;
+    bottom: -31px;
+    margin: 0 -3px;
+    padding: 15px 3px calc(15px + env(safe-area-inset-bottom));
+    background: #fff;
+    z-index: 1;
+    gap: 12px;
+  }
+  .form-actions .button {
+    min-height: 48px;
+    flex: 1;
+    justify-content: center;
+    font-size: 13px;
+    padding: 13px;
+  }
+  .form-actions .plain-button {
+    font-size: 13px;
+  }
+  .placeholder-payment {
+    padding: 17px;
+    gap: 15px;
+  }
+  .placeholder-payment img {
+    width: 120px;
+    height: 120px;
+  }
+  .placeholder-payment b {
+    font-size: 16px;
+  }
+  .placeholder-payment p {
+    font-size: 13px;
+  }
+  .placeholder-payment span {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .upload-zone {
+    padding: 25px 14px;
+  }
+  .upload-zone b {
+    font-size: 14px;
+  }
+  .upload-zone span {
+    font-size: 11px;
+  }
+  .review-details > div {
+    font-size: 13px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    padding: 12px 0;
+    gap: 13px;
+  }
+  .review-details dd {
+    line-height: 1.65;
+  }
+  .consent-row label {
+    font-size: 12px;
+  }
+  .privacy-hint {
+    font-size: 12px;
+  }
+}
+@media (max-width: 359px) {
+  .site-header {
+    padding-left: 13px;
+    padding-right: 10px;
+    gap: 5px;
+  }
+  .brand img {
+    width: 34px;
+  }
+  .brand {
+    gap: 5px;
+  }
+  .brand b {
+    font-size: 11px;
+  }
+  .brand small {
+    font-size: 8px;
+  }
+  .header-actions {
+    gap: 0;
+  }
+  .entry-button {
+    width: 40px;
+    min-height: 40px;
+  }
+  .menu-button {
+    min-width: 40px;
+  }
+  .hero-content {
+    padding: 25px 20px 23px;
+  }
+  .hero h1 {
+    font-size: 36px;
+  }
+  .hero-subtitle {
+    font-size: 16px;
+  }
+  .hero-distances {
+    display: none;
+  }
+  .hero-actions .button {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .hero-facts {
+    font-size: 11px;
+    gap: 8px 10px;
+  }
+  .section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .event-strip {
+    padding-left: 18px;
+    padding-right: 18px;
+    gap: 0 8px;
+  }
+  .event-strip > div {
+    gap: 6px;
+  }
+  .event-strip strong {
+    font-size: 11px;
+  }
+  .event-strip small {
+    font-size: 8px;
+  }
+  .race-card {
+    padding: 18px;
+  }
+  .race-card-heading {
+    gap: 16px;
+  }
+  .race-distance {
+    font-size: 54px;
+  }
+  .race-card h3 {
+    font-size: 18px;
+  }
+  .race-select {
+    font-size: 11px;
+    gap: 5px;
+    padding: 11px;
+  }
+  .race-bottom {
+    gap: 9px;
+  }
+  .race-bottom strong {
+    font-size: 24px;
+  }
+  .registration-dialog {
+    padding-left: 17px !important;
+    padding-right: 17px !important;
+  }
+  .registration-steps li {
+    font-size: 9px;
+  }
+  .registration-dialog [data-slot='dialog-title'] {
+    font-size: 24px;
+  }
+  .registration-races label {
+    padding: 11px 7px;
+  }
+  .registration-races b {
+    font-size: 15px;
+  }
+  .mobile-register {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .mobile-register small {
+    max-width: 150px;
+    font-size: 8px;
+  }
+  .mobile-register .button {
+    padding: 11px 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
