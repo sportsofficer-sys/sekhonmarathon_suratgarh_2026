@@ -286,21 +286,22 @@ export default function Home() {
               <picture>
                 <source
                   media="(max-width: 700px)"
-                  srcSet={`${base}/assets/suratgarh-canal-mobile.webp`}
+                  srcSet={`${base}/assets/suratgarh-station-mobile-v2.webp`}
                 />
                 <img
-                  src={`${base}/assets/suratgarh-canal-desktop.webp`}
-                  alt="Canvas impression of a green desert station, with a tree-lined canal, runners and Indian Air Force aircraft"
-                  width="1600"
-                  height="900"
+                  src={`${base}/assets/suratgarh-station-desktop-v2.webp`}
+                  alt="Canvas impression of runners on a landscaped station road, with Indian Air Force aircraft overhead and the region’s canal in the distance"
+                  width="1774"
+                  height="887"
                   fetchPriority="high"
                 />
               </picture>
               <figcaption>
                 <Waves size={18} />
                 <span>
-                  <b>DESERT SPIRIT. A COMMUNITY IN STRIDE.</b>Canvas impression
-                  inspired by Suratgarh and the Indira canal; not a route map.
+                  <b>DESERT SPIRIT. A COMMUNITY IN STRIDE.</b>Canvas impression of
+                  station life and the surrounding region. The canal lies outside
+                  the station; this is not a route map.
                 </span>
               </figcaption>
             </figure>

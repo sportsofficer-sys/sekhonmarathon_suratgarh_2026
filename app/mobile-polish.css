@@ -1311,12 +1311,16 @@ summary {
     white-space: nowrap;
   }
   .registration-dialog {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
     height: 100dvh;
     max-height: 100dvh;
+    overflow-x: hidden;
     top: 0;
     left: 0;
+    /* Reset the centring utilities even when the production optimiser folds translate. */
+    --tw-translate-x: 0px;
+    --tw-translate-y: 0px;
     transform: none;
     translate: none;
     border: 0;
