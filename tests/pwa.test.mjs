@@ -6,7 +6,7 @@ import test from 'node:test';
 const root = new URL('../', import.meta.url);
 
 test('PWA serves current pages, isolates private requests and provides a public offline fallback', async () => {
-const origin = 'https://sportsofficer-sys.github.io';
+const origin = 'https://reds-aviation.github.io';
 const base = `${origin}/sekhonmarathon_suratgarh_2026/`;
 const events = {};
 const buckets = new Map();

@@ -1,7 +1,7 @@
 import {createClient} from '@supabase/supabase-js';
 import {renderCertificate} from './render.ts';
 
-const allowedOrigins=(Deno.env.get('ALLOWED_ORIGIN')||'https://sportsofficer-sys.github.io').split(',').map(value=>value.trim());
+const allowedOrigins=(Deno.env.get('ALLOWED_ORIGIN')||'https://reds-aviation.github.io').split(',').map(value=>value.trim());
 const admin=createClient(Deno.env.get('SUPABASE_URL')!,Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,{auth:{persistSession:false,autoRefreshToken:false}});
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 Deno.serve(async(req:Request)=>{

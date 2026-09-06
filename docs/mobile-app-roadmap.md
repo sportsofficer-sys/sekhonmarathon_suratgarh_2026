@@ -20,7 +20,7 @@ For the current web version, open the public site in a supporting Android browse
 
 A later Google Play release is a separate deliverable. A Trusted Web Activity wrapper is one possible path, using a tool such as Bubblewrap; it requires a signed Android build and verified association between the application and owned website. Google's [Trusted Web Activity guide](https://developer.chrome.com/docs/android/trusted-web-activity/quick-start) documents these steps.
 
-For this GitHub Pages project, Digital Asset Links must be served at the **origin root** (`https://sportsofficer-sys.github.io/.well-known/assetlinks.json`), not just inside the marathon repository path. Decide between configuring the account's root site and using an owned event domain before packaging. Do not invent an application ID, signing key, store account or release policy approval. Prepare the store listing, privacy/data declarations and current Play requirements only when that release is commissioned.
+For this GitHub Pages project, Digital Asset Links must be served at the **origin root** (`https://reds-aviation.github.io/.well-known/assetlinks.json`), not just inside the marathon repository path. Decide between configuring the account's root site and using an owned event domain before packaging. Do not invent an application ID, signing key, store account or release policy approval. Prepare the store listing, privacy/data declarations and current Play requirements only when that release is commissioned.
 
 ## iPhone installation
 

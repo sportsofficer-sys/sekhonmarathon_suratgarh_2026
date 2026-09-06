@@ -2,6 +2,9 @@
 
 **Air Force Station Suratgarh — The land of Sun and Sand.**
 
+Website: https://reds-aviation.github.io/sekhonmarathon_suratgarh_2026/
+Repository: https://github.com/reds-aviation/sekhonmarathon_suratgarh_2026
+
 Mobile-first event web app with a station-focused identity, original canal-community canvas artwork, source-checked Sekhon biography and historical running photographs, 5/10/21 KM selection, registration, participant race desk and protected organiser/timing/certificate modules. Built for GitHub Pages, with Supabase Auth/database/private screenshots and a private Google Drive organiser register.
 
 ## Current launch state
@@ -21,8 +24,8 @@ Public environment variables: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_
 ## Connect the new Supabase project
 
 1. Create the project in your Supabase account. Run all numbered files in `supabase/migrations` in order as the project owner. The new event-day migrations deliberately keep registration and payment flags closed. They create event/race configuration, private membership and invitation records, private registrations and a private `payment-receipts` bucket.
-2. Enable email sign-up and confirmation; disable anonymous sign-ins. Configure your SMTP provider. In the sign-in email template, include `{{ .Token }}` for the numeric email code. Configure the site URL and redirect URL to the GitHub Pages event address. Supabase's default email service is restricted and is not a production mail service.
-3. Deploy `submit-registration`. `verify_jwt=false` is deliberate: the function explicitly verifies every caller using Supabase Auth `getUser`, then checks station membership. It does not accept unauthenticated registrations. `SUPABASE_URL`, `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` are backend runtime values; set `SITE_ORIGIN=https://sportsofficer-sys.github.io`.
+2. Enable email sign-up and confirmation; disable anonymous sign-ins. Configure your SMTP provider. In the sign-in email template, include `{{ .Token }}` for the numeric email code. Set the Site URL and allowed redirect URL to `https://reds-aviation.github.io/sekhonmarathon_suratgarh_2026/`. Supabase's default email service is restricted and is not a production mail service.
+3. Deploy `submit-registration`. `verify_jwt=false` is deliberate: the function explicitly verifies every caller using Supabase Auth `getUser`, then checks station membership. It does not accept unauthenticated registrations. `SUPABASE_URL`, `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` are backend runtime values; set `SITE_ORIGIN=https://reds-aviation.github.io`.
 4. Generate the station code using the commented owner-only setup command in migration 2. Distribute it through station channels. Only the hash is stored; no code is embedded in the website. Revoke or rotate codes and memberships through the private administration tables.
 5. Add Suratgarh's QR URL, payee name, UPI ID and event contact details to `event_config`. Set `payment_configured=true` and `registration_open=true` only when these are correct. The database enforces the deadline independently of the browser.
 6. Set the two public frontend configuration values, rebuild and republish. Test live email sign-in, invalid/valid station code, a real test screenshot in the new test environment, duplicate submission, separate account privacy, and the Drive import before inviting participants.

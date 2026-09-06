@@ -43,7 +43,7 @@ Physical iPhone Safari/Android testing, native browser Back and live email/payme
 
 ## Publication
 
-Target: https://sportsofficer-sys.github.io/sekhonmarathon_suratgarh_2026/
+Target: https://reds-aviation.github.io/sekhonmarathon_suratgarh_2026/
 
 The compact redesign was first published in source commit `1931efe`, gh-pages `820c2b7`; Pages run `33984267618` succeeded. The photo-only follow-up uses production assets `index-CdsxBAVa.js` and `index-Cd_7tsEQ.css`.
 

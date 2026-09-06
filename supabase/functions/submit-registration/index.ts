@@ -1,7 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.115.0';
 import { EVENT_ID, MAX_RECEIPT_BYTES, validatePayload, receiptExtension } from './validation.ts';
 
-const allowedOrigin = Deno.env.get('SITE_ORIGIN') || 'https://sportsofficer-sys.github.io';
+const allowedOrigin = Deno.env.get('SITE_ORIGIN') || 'https://reds-aviation.github.io';
 const url = Deno.env.get('SUPABASE_URL')!;
 const anon = Deno.env.get('SUPABASE_ANON_KEY')!;
 const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
