@@ -409,6 +409,53 @@
   border-bottom: 1px solid #dce4db;
   margin-bottom: 23px;
 }
+.guide-save {
+  padding: 0 0 23px;
+  border-bottom: 1px solid #dce4db;
+  margin-bottom: 23px;
+}
+.guide-save h2 {
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.4px;
+}
+.guide-save > p:first-of-type {
+  margin-top: 7px;
+  color: #52665f;
+  font-size: 14px;
+}
+.guide-save-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+.guide-save-actions > a,
+.guide-save-actions > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 15px;
+  border: 1px solid #286a60;
+  border-radius: 5px;
+  background: #fff;
+  color: #205c50;
+  font-size: 13px;
+  font-weight: 650;
+}
+.guide-save-actions > a:hover,
+.guide-save-actions > button:hover {
+  background: #edf3ea;
+}
+.guide-share-status {
+  display: block;
+  min-height: 20px;
+  margin-top: 7px;
+  color: #52665f;
+  font-size: 12px;
+}
 .guide-route-brief p {
   margin-top: 9px;
   font-size: 14px;
@@ -425,6 +472,7 @@
     padding: 19px;
   }
   .guide-collection-title h2,
+  .guide-save h2,
   .guide-contact-section h2,
   .guide-route-brief h2 {
     font-size: 18px;
@@ -1260,6 +1308,15 @@
   .guide-contacts {
     grid-template-columns: 1fr;
   }
+  .guide-save-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .guide-save-actions > a,
+  .guide-save-actions > button {
+    padding: 9px 8px;
+    font-size: 12px;
+  }
   .guide-call {
     font-size: 15px;
   }
@@ -1351,6 +1408,11 @@
   .app-footer {
     margin-left: 18px;
     margin-right: 18px;
+  }
+  .guide-save-actions > a,
+  .guide-save-actions > button {
+    gap: 6px;
+    font-size: 11px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

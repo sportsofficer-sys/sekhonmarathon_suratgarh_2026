@@ -12,6 +12,8 @@ import {
   Info,
   X,
   LoaderCircle,
+  Copy,
+  Download,
 } from 'lucide-react';
 import {
   Dialog,
@@ -29,7 +31,11 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/lib/supabase';
-import { useEventAvailability } from '@/lib/event-availability';
+import {
+  isUsablePaymentQrUrl,
+  readPaymentQrBlob,
+  useEventAvailability,
+} from '@/lib/event-availability';
 import { RACE_FEES } from '@/lib/race-data';
 import type { User } from '@supabase/supabase-js';
 
@@ -39,7 +45,6 @@ const raceNames: Record<string, string> = {
   '10': 'Challenge Run',
   '21': 'Half Marathon',
 };
-const fees = RACE_FEES;
 const participantOptions = [
   { value: 'airwarrior', label: 'Airwarrior' },
   { value: 'family', label: 'Family member' },
@@ -139,7 +144,7 @@ export function Registration({
   onChooseRace?: () => void;
   mode?: RegistrationMode;
 }) {
-  const { config, availability } = useEventAvailability();
+  const { config, availability, confirmedFees } = useEventAvailability();
   const [view, setView] = useState<RegistrationMode>(mode);
   const [step, setStep] = useState(0),
     [chosen, setChosen] = useState(race),
@@ -154,6 +159,11 @@ export function Registration({
     [busy, setBusy] = useState(false),
     [error, setError] = useState(''),
     [message, setMessage] = useState('');
+  const [paymentFeedback, setPaymentFeedback] = useState<{
+    context: string;
+    text: string;
+  } | null>(null);
+  const paymentDownload = useRef<AbortController | null>(null);
   const [file, setFile] = useState<File | null>(null),
     [fileUrl, setFileUrl] = useState(''),
     [consent, setConsent] = useState(false);
@@ -169,9 +179,115 @@ export function Registration({
   const heading = useRef<HTMLHeadingElement>(null);
   const errorMessage = useRef<HTMLParagraphElement>(null);
   const active = availability === 'open';
+  const liveFeesRequired =
+    !preview &&
+    (step > 0 || !!config?.payment_configured || availability === 'unavailable');
+  const fees: Record<string, number> | null = liveFeesRequired
+    ? confirmedFees
+    : RACE_FEES;
+  const feeLabel = (distance: string) =>
+    fees?.[distance] === undefined
+      ? 'Unavailable'
+      : `₹${fees[distance].toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+  const confirmedAmount = confirmedFees?.[chosen as keyof typeof confirmedFees];
+  const paymentToolsEnabled =
+    active &&
+    !preview &&
+    !!config?.payment_configured &&
+    !!config.payee_name?.trim() &&
+    !!config.upi_id?.trim() &&
+    isUsablePaymentQrUrl(config.payment_qr_url) &&
+    Number.isFinite(confirmedAmount);
   const statusMode = view === 'status';
   const canSignIn = !!supabase && (statusMode || active);
   const today = new Date(Date.now() + 19800000).toISOString().slice(0, 10);
+  const paymentContext = JSON.stringify([
+    step,
+    view,
+    chosen,
+    confirmedAmount,
+    paymentToolsEnabled,
+    config?.payment_qr_url,
+    config?.upi_id,
+    config?.payee_name,
+  ]);
+
+  useEffect(() => {
+    return () => paymentDownload.current?.abort();
+  }, [paymentContext]);
+
+  function announcePayment(text: string) {
+    setPaymentFeedback({ context: paymentContext, text });
+  }
+
+  async function copyPaymentValue(kind: 'upi' | 'amount') {
+    if (!paymentToolsEnabled || !config || busy) return;
+    setBusy(true);
+    setPaymentFeedback(null);
+    try {
+      await navigator.clipboard.writeText(
+        kind === 'upi' ? config.upi_id!.trim() : String(confirmedAmount),
+      );
+      announcePayment(
+        kind === 'upi'
+          ? `UPI ID copied for ${config.payee_name}.`
+          : `Amount ${confirmedAmount} copied for ${chosen} KM.`,
+      );
+    } catch {
+      announcePayment(
+        `Clipboard unavailable. Select and copy the ${kind === 'upi' ? 'UPI ID' : 'amount'} shown above.`,
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function savePaymentQR() {
+    if (!paymentToolsEnabled || !config?.payment_qr_url || busy) return;
+    const controller = new AbortController();
+    paymentDownload.current = controller;
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+    setBusy(true);
+    announcePayment('Preparing QR download…');
+    try {
+      const response = await fetch(config.payment_qr_url, {
+        credentials: 'omit',
+        cache: 'no-store',
+        signal: controller.signal,
+      });
+      const blob = await readPaymentQrBlob(response);
+      const extensions: Record<string, string> = {
+        'image/png': 'png',
+        'image/jpeg': 'jpg',
+        'image/webp': 'webp',
+        'image/gif': 'gif',
+        'image/svg+xml': 'svg',
+      };
+      const extension = extensions[blob.type.toLowerCase().split(';')[0]];
+      if (!extension) throw new Error('QR image unavailable');
+      if (controller.signal.aborted) return;
+      // Never offer a download if the payment deadline passed during the fetch.
+      if (Date.now() > Date.parse(config.registration_deadline)) return;
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `desert-braves-payment-qr-${chosen}km.${extension}`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+      announcePayment('QR download requested. Check your downloads.');
+    } catch {
+      announcePayment(
+        'QR download unavailable. Use your browser’s image menu to save it, or copy the UPI ID.',
+      );
+    } finally {
+      window.clearTimeout(timeout);
+      if (paymentDownload.current === controller)
+        paymentDownload.current = null;
+      setBusy(false);
+    }
+  }
 
   useEffect(() => {
     let pending = crypto.randomUUID();
@@ -699,7 +815,7 @@ export function Registration({
             <span>
               <b>{chosen} KM</b> {raceNames[chosen]}
             </span>
-            <strong>₹{fees[chosen]}</strong>
+            <strong>{feeLabel(chosen)}</strong>
           </div>
         )}
 
@@ -722,14 +838,18 @@ export function Registration({
                       <b>{distance} KM</b>
                       <small>{raceNames[distance]}</small>
                     </span>
-                    <strong>₹{fees[distance]}</strong>
+                    <strong>{feeLabel(distance)}</strong>
                   </label>
                 ))}
               </RadioGroup>
             )}
-            {!statusMode && !active && (
+            {!statusMode && (
               <p className="planned-fee-note">
-                Provisional fees. Payments are not open.
+                {liveFeesRequired
+                  ? confirmedFees
+                    ? 'Confirmed fees.'
+                    : 'Fees unavailable. Payments are not open.'
+                  : 'Provisional fees. Payments are not open.'}
               </p>
             )}
             {statusMode ? (
@@ -979,7 +1099,7 @@ export function Registration({
                   </p>
                 </div>
               </div>
-            ) : !preview && config?.payment_qr_url ? (
+            ) : paymentToolsEnabled && config?.payment_qr_url ? (
               <div className="payment-instructions">
                 <img
                   src={config.payment_qr_url}
@@ -987,12 +1107,50 @@ export function Registration({
                 />
                 <div>
                   <span className="eyebrow">PAY THE EXACT AMOUNT</span>
-                  <strong>₹{fees[chosen]}</strong>
+                  <strong>{feeLabel(chosen)}</strong>
                   <p>{config.payee_name}</p>
                   <small>{config.upi_id}</small>
                   <p>
                     Check the payee in your UPI app before confirming payment.
                   </p>
+                  <div className="registration-mode-switch">
+                    <button
+                      type="button"
+                      className="plain-button"
+                      disabled={busy || !paymentToolsEnabled}
+                      onClick={() => void copyPaymentValue('upi')}
+                      aria-label={`Copy UPI ID for ${config.payee_name}`}
+                    >
+                      <Copy size={16} aria-hidden="true" /> Copy UPI ID
+                    </button>
+                    <button
+                      type="button"
+                      className="plain-button"
+                      disabled={busy || !paymentToolsEnabled}
+                      onClick={() => void copyPaymentValue('amount')}
+                      aria-label={`Copy amount of ${confirmedAmount} rupees`}
+                    >
+                      <Copy size={16} aria-hidden="true" /> Copy amount
+                    </button>
+                    <button
+                      type="button"
+                      className="plain-button"
+                      disabled={busy || !paymentToolsEnabled}
+                      onClick={() => void savePaymentQR()}
+                      aria-label={`Save QR for ${config.payee_name}`}
+                    >
+                      <Download size={16} aria-hidden="true" /> Save QR
+                    </button>
+                  </div>
+                  <output
+                    className="privacy-hint"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    {paymentFeedback?.context === paymentContext
+                      ? paymentFeedback.text
+                      : ''}
+                  </output>
                 </div>
               </div>
             ) : (
@@ -1055,9 +1213,7 @@ export function Registration({
                   <b>{file.name}</b>
                   <small>
                     {(file.size / 1024).toFixed(0)} KB ·{' '}
-                    {preview
-                      ? 'Preview only'
-                      : 'Ready for submission'}
+                    {preview ? 'Preview only' : 'Ready for submission'}
                   </small>
                 </span>
                 <button
@@ -1137,7 +1293,7 @@ export function Registration({
                 ['T-shirt size', details.tshirt],
                 ['Blood group', details.blood_group],
                 ['Emergency contact', details.emergency_contact],
-                ['Amount', `₹${fees[chosen]}`],
+                ['Amount', feeLabel(chosen)],
                 [
                   'Transaction reference',
                   details.transaction_id || 'Not added (preview)',

@@ -67,8 +67,23 @@ export default function Home() {
   );
   const lastPage = useRef<SitePage>(initial.page || 'home');
   const focusNext = useRef(Boolean(initial.anchor));
-  const { availability } = useEventAvailability();
+  const { availability, config, confirmedFees } = useEventAvailability();
   const canRegister = availability === 'open';
+  const liveFeesRequired =
+    !!config?.payment_configured || availability === 'unavailable';
+  const feeStatus = liveFeesRequired
+    ? confirmedFees
+      ? 'Confirmed'
+      : 'Unavailable'
+    : 'Planned';
+  const feeLabel = (race: (typeof RACES)[number]) => {
+    const amount = liveFeesRequired
+      ? confirmedFees?.[race.distance as keyof typeof confirmedFees]
+      : race.fee;
+    return amount === undefined
+      ? 'Unavailable'
+      : `₹${amount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+  };
   const status = {
     loading: 'Checking registration',
     upcoming: 'Registration opens soon',
@@ -314,7 +329,7 @@ export default function Home() {
               <section aria-labelledby="home-races-title">
                 <div className="app-section-title">
                   <h2 id="home-races-title">Find your distance.</h2>
-                  <span>Planned fees</span>
+                  <span>{feeStatus} fees</span>
                 </div>
                 <div className="app-distance-list">
                   {RACES.map((race) => (
@@ -324,7 +339,7 @@ export default function Home() {
                       onClick={(event) =>
                         follow(event, 'races', `#race-${race.distance}`)
                       }
-                      aria-label={`${race.distance} KM ${race.name}, planned fee ₹${race.fee}, view details`}
+                      aria-label={`${race.distance} KM ${race.name}, ${feeStatus.toLowerCase()} fee ${feeLabel(race)}, view details`}
                     >
                       <strong>
                         {race.distance}
@@ -333,14 +348,18 @@ export default function Home() {
                       <span>
                         <b>{race.name}</b>
                       </span>
-                      <em>₹{race.fee}</em>
+                      <em>{feeLabel(race)}</em>
                       <ChevronRight size={18} />
                     </a>
                   ))}
                 </div>
                 <p className="app-small-note">
-                  Entries close 27 September. Final fees will be confirmed
-                  before payment opens.
+                  Entries close 27 September.{' '}
+                  {liveFeesRequired
+                    ? confirmedFees
+                      ? 'Fees shown are confirmed.'
+                      : 'Fees are unavailable. Please try again later.'
+                    : 'Final fees will be confirmed before payment opens.'}
                 </p>
               </section>
               <section className="app-home-links" aria-label="Before your run">
@@ -435,8 +454,8 @@ export default function Home() {
                       <small>{race.detail}</small>
                     </span>
                     <span className="app-race-price">
-                      <b>₹{race.fee}</b>
-                      <small>planned</small>
+                      <b>{feeLabel(race)}</b>
+                      <small>{feeStatus.toLowerCase()}</small>
                     </span>
                     <ChevronRight size={19} />
                   </summary>
@@ -454,7 +473,11 @@ export default function Home() {
               ))}
             </div>
             <p className="app-small-note">
-              Fees are provisional. No payment is accepted in the preview.
+              {liveFeesRequired
+                ? confirmedFees
+                  ? 'Fees shown are confirmed.'
+                  : 'Fees are unavailable. Payments are not open.'
+                : 'Fees are provisional. No payment is accepted in the preview.'}
             </p>
             <section className="app-race-kit">
               <h2>Planned for every runner</h2>

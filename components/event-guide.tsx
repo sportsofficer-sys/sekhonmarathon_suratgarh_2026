@@ -1,15 +1,50 @@
 'use client';
+import { useState } from 'react';
 import {
   ArrowRight,
+  CalendarPlus,
   CalendarDays,
   Clock3,
   MapPin,
   Phone,
+  Share2,
   ShieldCheck,
   Shirt,
 } from 'lucide-react';
 
+const eventUrl =
+  'https://reds-aviation.github.io/sekhonmarathon_suratgarh_2026/';
+
 export function EventGuide({ onChooseRace }: { onChooseRace: () => void }) {
+  const [shareStatus, setShareStatus] = useState('');
+
+  async function shareEvent() {
+    const shareData = {
+      title: 'Sekhon IAF Marathon 2026 · Suratgarh',
+      text: 'Sekhon IAF Marathon at Air Force Station Suratgarh on 4 October 2026, for airwarriors and families.',
+      url: eventUrl,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        setShareStatus('Share options opened.');
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError')
+          return;
+        setShareStatus('Use your browser’s Share option to send this page.');
+      }
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(eventUrl);
+      setShareStatus('Event link copied.');
+    } catch {
+      setShareStatus('Use your browser’s Share option to send this page.');
+    }
+  }
+
   return (
     <main id="main" className="app-view guide-view" tabIndex={-1}>
       <header className="guide-header">
@@ -52,6 +87,30 @@ export function EventGuide({ onChooseRace }: { onChooseRace: () => void }) {
             inside the station
           </span>
         </p>
+      </section>
+
+      <section className="guide-save" aria-labelledby="save-event-title">
+        <h2 id="save-event-title" tabIndex={-1}>
+          Keep the date handy
+        </h2>
+        <p>
+          Save both event dates or share this page with an eligible family
+          member.
+        </p>
+        <div className="guide-save-actions">
+          <a
+            href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/sekhon-marathon-2026.ics`}
+            download
+          >
+            <CalendarPlus size={18} aria-hidden="true" /> Add dates
+          </a>
+          <button type="button" onClick={shareEvent}>
+            <Share2 size={18} aria-hidden="true" /> Share event
+          </button>
+        </div>
+        <output className="guide-share-status" aria-live="polite">
+          {shareStatus}
+        </output>
       </section>
 
       <section

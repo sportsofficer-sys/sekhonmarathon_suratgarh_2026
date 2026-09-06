@@ -70,4 +70,6 @@ The manifest and production worker provide home-screen installation metadata and
 
 The station brief supersedes earlier caps/chip-timing and ₹399/₹899 package assumptions. The latest design follows a navy/ivory/canal-green palette with measured text contrast. Historical photographs have year/location/source captions; the painting is a fictional impression of a thriving station community. Asset provenance is in [asset-sources](docs/asset-sources.md).
 
+The latest reference study, design direction, shipped improvements and pre-launch priorities are recorded in [the website design intelligence review](docs/design-intelligence-review.md).
+
 The separate organiser budget calculator models 100–500 runners, planned ₹600/₹700/₹800 fees, ₹300 shirts, ₹150 medals, food alternatives and 5/10/15% contingency. These are planning allowances, not supplier commitments. The ₹20,000 seed is kept separate from earned registration revenue. Confirm supplier lead times early; the seven days between registration close and race day are not sufficient for many custom orders.
